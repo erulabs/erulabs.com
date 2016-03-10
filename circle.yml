@@ -1,0 +1,18 @@
+
+machine:
+  node:
+    version: stable
+
+dependencies:
+  override:
+    - npm install
+
+test:
+  override:
+    - NODE_ENV=production npm run build
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - npm run deploy

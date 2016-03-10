@@ -1,5 +1,4 @@
 /node_modules
-bundle.js
-bundle.js.map
-npm-debug.log
+/build/bundle.js
+/npm-debug.log
 *.swp
