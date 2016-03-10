@@ -5,7 +5,9 @@
     "modules": true,
     "jsx": true
   },
-  "rules": {},
+  "rules": {
+    'no-unused-vars': 0
+  },
   "plugins": [
     "react"
   ],

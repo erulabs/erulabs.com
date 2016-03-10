@@ -2,7 +2,8 @@ module.exports = {
   entry: getEntrySources(['./index.jsx']),
   output: {
     path: __dirname,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    sourceMapFilename: 'bundle.js.map'
   },
   module: {
     preLoaders: [

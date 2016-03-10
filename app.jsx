@@ -1,5 +1,7 @@
 import React from 'react'
 
+const location = window.location.hash || 'index'
+
 export default class App extends React.Component {
   constructor (props) {
     super(props)
@@ -7,7 +9,7 @@ export default class App extends React.Component {
   }
   render () {
     return <div>
-      { this.words }
+      { location }
     </div>
   }
 }
