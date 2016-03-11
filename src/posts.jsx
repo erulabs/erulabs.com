@@ -1,3 +1,7 @@
 export default [
-  [ 'A test post', 'datefoo', 'test.md' ]
+  [ 'A_test_post', 'datefoo', 'test.md' ],
+  [ 'A_test_post', 'datefoo', 'test.md' ],
+  [ 'A_test_post', 'datefoo', 'test.md' ],
+  [ 'A_test_post', 'datefoo', 'test.md' ],
+  [ 'A_test_post', 'datefoo', 'test.md' ]
 ]

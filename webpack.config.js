@@ -17,6 +17,15 @@ module.exports = {
 			{ test: /\.jsx$/, exclude: /node_modules/,
 				loaders: [ 'react-hot', 'babel?presets[]=stage-0,presets[]=react,presets[]=es2015' ] }
     ]
+  },
+  devServer: {
+    hot: true,
+    proxy: {
+      '/p/*': {
+        target: 'http://localhost:8080',
+        bypass: (req, res, proxyOptions) => { if (req.headers.accept.indexOf('html') !== -1) return '/index.html' }
+      }
+    }
   }
 }
 
