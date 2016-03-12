@@ -1,7 +1,7 @@
 module.exports = {
   entry: getEntrySources(['./src/index.jsx']),
   output: {
-    path: `${__dirname}/build`,
+    path: `${__dirname}/public`,
     filename: 'bundle.js',
     sourceMapFilename: 'bundle.js.map'
   },

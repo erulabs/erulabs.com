@@ -4,9 +4,8 @@
   "description": "Seandon Mooy's personal website",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --content-base build --hot --progress --colors",
-    "build": "./node_modules/.bin/webpack --progress --colors",
-    "deploy": "aws s3 cp build s3://seandonmooy.com/ --recursive"
+    "dev": "./node_modules/.bin/webpack-dev-server --content-base public --hot --progress --colors",
+    "build": "./node_modules/.bin/webpack --progress --colors"
   },
   "repository": {
     "type": "git",
