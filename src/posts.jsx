@@ -11,5 +11,6 @@ export const FILENAME = 2
 export const CONTENT = 3
 export const PAGENOTFOUND = [ null, null, null, '# 404\nPage not found! :(' ]
 export const POSTS = [
-  [ 'Hello_World', '3/11/16', 'Hello_World.md' ]
+  [ 'Hello_World', '3/11/16', 'Hello_World.md' ],
+  [ 'post_number_two', '3/10/16', 'postnumbertwo.md' ]
 ]

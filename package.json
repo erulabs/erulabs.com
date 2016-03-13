@@ -4,7 +4,7 @@
   "description": "Seandon Mooy's personal website",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --content-base public --hot --progress --colors",
+    "dev": "./node_modules/.bin/webpack-dev-server --hot --content-base public --colors --watch ./src/index.jsx",
     "build": "./node_modules/.bin/webpack --progress --colors"
   },
   "repository": {

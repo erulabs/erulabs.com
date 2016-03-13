@@ -1,4 +1,7 @@
+const path = require('path')
+const webpack = require('webpack')
 module.exports = {
+  plugins: getPlugins(),
   entry: getEntrySources(['./src/index.jsx']),
   output: {
     path: `${__dirname}/public`,
@@ -12,21 +15,34 @@ module.exports = {
     loaders: [
 			{ test: /\.less$/, loader: 'style!css!less' },
       { test: /\.css$/, loader: 'style!css' },
-      { test: /\.md$/, loader: 'raw' },
+      { test: /\.md$/, loader: 'raw',
+        include: path.join(__dirname, '.') },
 			{ test: /\.(jpe?g|png|gif|svg)$/i, loaders: [ 'url?limit=8192', 'img' ] },
 			{ test: /\.jsx$/, exclude: /node_modules/,
+        include: path.join(__dirname, '.'),
 				loaders: [ 'react-hot', 'babel?presets[]=stage-0,presets[]=react,presets[]=es2015' ] }
     ]
   },
   devServer: {
-    hot: true,
     proxy: {
-      '/p/*': {
+      '/b/*': {
         target: 'http://localhost:8080',
         bypass: (req, res, proxyOptions) => { if (req.headers.accept.indexOf('html') !== -1) return '/index.html' }
       }
     }
   }
+}
+
+function getPlugins () {
+  var plugins
+  if (process.env.NODE_ENV !== 'production') {
+    plugins = [
+      new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } })
+    ]
+  }
+  return plugins
 }
 
 function getEntrySources (sources) {
