@@ -1,18 +1,17 @@
-
 machine:
+  pre:
+    - mkdir ~/.yarn-cache
   node:
-    version: stable
+    version: v7.5.0
 
 dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.20.3
+  cache_directories:
+    - ~/.yarn-cache
   override:
-    - npm install
+    - yarn install
 
 test:
   override:
-    - NODE_ENV=production npm run build
-
-deployment:
-  master:
-    branch: master
-    commands:
-      - npm run deploy
+    - ./bin/lint.sh

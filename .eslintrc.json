@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "object-property-newline": 0,
+    "complexity": ["error", 9],
+    "no-console": 2,
+    "no-unused-vars": 0
+  },
+  "plugins": [
+  ],
+  "settings": {
+  }
+}

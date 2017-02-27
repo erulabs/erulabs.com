@@ -1,4 +1,16 @@
-/node_modules
-/build/bundle.js
-/npm-debug.log
+*.log
+_build
+_db
+.DS_Store
+*.tmp
 *.swp
+node_modules
+.git
+.devlog.plain
+secrets
+.release
+tmp
+src/www/.well-known
+
+# REMOVE THIS BEFORE GOING TO PROD
+yarn.lock
