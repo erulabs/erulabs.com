@@ -4,9 +4,8 @@
   "description": "Seandon Mooy's personal website",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --content-base build --hot --progress --colors",
-    "build": "./node_modules/.bin/webpack --progress --colors",
-    "deploy": "aws s3 cp build s3://seandonmooy.com/ --recursive"
+    "dev": "./node_modules/.bin/webpack-dev-server --hot --content-base public --colors --watch ./src/index.jsx",
+    "build": "./node_modules/.bin/webpack --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -55,7 +54,6 @@
     "vue-loader": "^11.1.3",
     "vue-template-compiler": "^2.2.1",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1",
-    "webpack-stream": "^3.2.0"
+    "webpack-dev-server": "^2.4.1"
   }
 }

@@ -1,3 +1,5 @@
+
+const webpack = require('webpack')
 const DEV_PORT = parseInt(process.env.DEV_PORT, 10) || 3005
 
 module.exports = {
@@ -16,7 +18,27 @@ module.exports = {
       { test: /\.jsx$/, exclude: /node_modules/,
         loaders: [ 'babel-loader' ] }
     ]
+  },
+  devServer: {
+    proxy: {
+      '/b/*': {
+        target: 'http://localhost:8080',
+        bypass: (req, res, proxyOptions) => { if (req.headers.accept.indexOf('html') !== -1) return '/index.html' }
+      }
+    }
   }
+}
+
+function getPlugins () {
+  var plugins
+  if (process.env.NODE_ENV !== 'production') {
+    plugins = [
+      new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } })
+    ]
+  }
+  return plugins
 }
 
 function getEntrySources (sources) {

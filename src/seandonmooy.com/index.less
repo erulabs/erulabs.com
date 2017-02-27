@@ -8,7 +8,6 @@ body, html {
   -webkit-font-smoothing: antialiased;
   font-family: monospace;
   font-size: 14px;
-  margin-top: 3em;
   color: #000;
 }
 .more {
@@ -29,13 +28,28 @@ body, html {
   a {
     text-decoration: none;
   }
+  a:hover {
+    text-decoration: underline;
+  }
+  .blogitem {
+    a {
+      color: #000;
+    }
+  }
 }
 .content {
-  padding-left: 1em;
   .post {
-    h1 {
-      font-size: 2em;
-      margin-bottom: 0.2em;
+    margin-top: 1em;
+    .post_date {
+      color: #aaa;
+      position: relative;
+      top: 0.3em;
+    }
+    .post_content {
+      h1 {
+        font-size: 3em;
+        margin-bottom: 0em;
+      }
     }
   }
 }
