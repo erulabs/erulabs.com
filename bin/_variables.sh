@@ -2,9 +2,11 @@
 
 PROJECT="seandonmooycom"
 PROJECT_DOMAIN="seandonmooy.com"
-PROJECT_BUCKET="seandonmooy.com"
 BUILD_DIRECTORY="_build"
 DEV_PORT="3005"
+
+SERVER="eru@${PROJECT_DOMAIN}"
+DEST="${SERVER}:${PROJECT_DOMAIN}"
 
 # For letsEncrypt
 REMOTE_ACME_DIR=".well-known/acme-challenge"

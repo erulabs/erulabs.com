@@ -1,14 +1,20 @@
 #!/bin/bash -e
 source ./bin/_variables.sh
 
-echo "Uploading to ${PROJECT_BUCKET} ..."
+echo "Uploading to ${DEST} ..."
 
-if ! [ -x "$(command -v gsutil)" ]; then
-  ~/AppData/Local/Google/Cloud\ SDK/google-cloud-sdk/platform/gsutil/gsutil -m rsync -R -c -d ./${BUILD_DIRECTORY} gs://${PROJECT_BUCKET}/
-else
-  gsutil -m rsync -R -c -d ./${BUILD_DIRECTORY} gs://${PROJECT_BUCKET}/
+COMMAND="rsync -arv"
+if ! [ -x "$(command -v rsync)" ]; then
+  echo "Falling back to scp"
+  COMMAND="scp -r "
 fi
 
+${COMMAND} ./${BUILD_DIRECTORY} ${DEST}/
+${COMMAND} ./inf ${DEST}/
 
+ssh ${SERVER} "\
+  sudo rsync -av --delete ~/${PROJECT_DOMAIN}/inf/nginx/* /etc/nginx/sites-enabled/ && \
+  sudo service nginx reload
+"
 
 echo "Done!"
