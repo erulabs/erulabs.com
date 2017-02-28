@@ -2,7 +2,7 @@
 source ./bin/_variables.sh
 
 USAGE="./bin/dev.sh"
-YARN_VERSION_SUPPORTED="0.20.3"
+YARN_VERSION_SUPPORTED="0.21.3"
 
 if ! [ -x "$(command -v yarn)" ]; then
   error "Please install 'yarn' - npm install -g yarn"
@@ -20,15 +20,5 @@ fi
 
 export NODE_ENV=development
 yarn --ignore-engines --no-progress --no-emoji
-./node_modules/.bin/gulp
 
-./node_modules/.bin/webpack-dev-server \
-  --https true \
-  --key ./secrets/${PROJECT}_selfsigned.key \
-  --cert ./secrets/${PROJECT}_selfsigned.crt \
-  --open \
-  --port ${DEV_PORT} \
-  --hot \
-  --content-base _build/seandonmooy.com \
-  --colors \
-  --watch
+DEV_PORT=${DEV_PORT} CDN_URI='' ./node_modules/.bin/gulp watch

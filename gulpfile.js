@@ -9,6 +9,7 @@ const less = require('gulp-less')
 const modrewrite = require('connect-modrewrite')
 const sourcemaps = require('gulp-sourcemaps')
 const replace = require('gulp-replace')
+const exec = require('child_process').exec
 
 // gutil.log = gutil.noop
 const clientSync = browserSync.create()
@@ -71,8 +72,39 @@ function doLess (version, name) {
 
 const WWW_VERSION = fs.readFileSync('./src/seandonmooy.com/version.txt').toString().split('\n')[0]
 doCopy(WWW_VERSION, 'seandonmooy.com/assets')
+doCopy(WWW_VERSION, 'seandonmooy.com/posts')
 doHtml(WWW_VERSION, 'seandonmooy.com')
 doCopy(WWW_VERSION, 'seandonmooy.com/favicons', '*', 'seandonmooy.com')
 doLess(WWW_VERSION, 'seandonmooy.com')
 
 gulp.task('default', Object.keys(tasks))
+
+gulp.task('watch', ['default'], function () {
+  gulp.watch('./src/seandonmooy.com/**/*.html', ['seandonmooy.com-html'])
+  gulp.watch('./src/seandonmooy.com/**/*.less', ['seandonmooy.com-less'])
+  gulp.watch('./src/seandonmooy.com/assets/**/*', ['seandonmooy.com/assets-copy'])
+  gulp.watch('./src/seandonmooy.com/posts/**/*', ['seandonmooy.com/posts-copy'])
+
+  const webpackCommand = [
+    'bash',
+    'node_modules/.bin/webpack-dev-server',
+    '--https=true',
+    '--key=./secrets/seandonmooycom_selfsigned.key',
+    '--cert=./secrets/seandonmooycom_selfsigned.crt',
+    '--open',
+    `--port=${process.env.DEV_PORT}`,
+    '--hot',
+    '--client-log-level=warning',
+    '--content-base=_build/seandonmooy.com',
+    '--colors',
+    '--watch'
+  ].join(' ')
+  console.log(webpackCommand)
+  const webpack = exec(webpackCommand)
+  webpack.stdout.on('data', (data) => process.stdout.write(`stdout: ${data}\n`))
+  webpack.stderr.on('data', (data) => process.stderr.write(`stderr: ${data}\n`))
+  webpack.on('close', (code) => {
+    process.stdout.write(`child process exited with code ${code}\n`)
+    process.exit(code)
+  })
+})

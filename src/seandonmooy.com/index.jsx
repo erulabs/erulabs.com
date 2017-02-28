@@ -7,34 +7,43 @@ import posts from './posts.js'
 const CDN_URI = process.env.CDN_URI || ''
 const VERSION = process.env.VERSION || '1.0.0'
 
-// Bundle the latest post
-posts[0].push(require(`./posts/${posts[0][2]}`))
-const location = window.location.hash || 'LATEST'
+const requestedPath = window.location.pathname.substr(1)
+let matchedPost = posts.find(p => p.file === requestedPath)
 
-let post = posts[0]
-if (location !== 'LATEST') {
-  post = posts.filter((p) => p[1] === location)
-  if (post.length > 0) {
-    // http req post data
-    post = post[0]
-  } else post = ['404', 'for ever and ever', null, "# 404\nThis page doesn't exist :("]
+if (matchedPost) {
+  const request = new XMLHttpRequest()
+  request.open('GET', `${CDN_URI}/posts/${matchedPost.file}`, true)
+  request.onload = function () {
+    if (request.status === 200) blog.post.body = marked(request.responseText)
+    else blog.post.body = `# Sorry\nThere appears to have been an error`
+  }
+  request.send()
+} else {
+  matchedPost = posts[0]
+  matchedPost.body = require(`./posts/${posts[0].file}`)
 }
-const sidebarPosts = posts.map((p, i) => {
-  // <div key={ i }>
-  //   <a>{ p[0] }</a>
-  // </div>
-})
 
-const blog = new Vue({
-  el: '#blog',
-  data: {
-    count: 0
-  },
+const sidebarPosts = new Vue({
+  name: 'sidebarPosts',
+  el: '#sidebarPosts',
+  data: { posts },
   render (h) {
-    return <div id="foo">{ this.count }</div>
+    return <div>
+      { this.posts.map(post => <div>
+        <a href={ `/${post.file}` } class='post'>{ post.title }</a>
+      </div>) }
+    </div>
   }
 })
 
-setInterval(() => {
-  blog.count++
-}, 1000)
+const blog = new Vue({
+  name: 'blog',
+  el: '#blog',
+  data: { post: matchedPost },
+  render (h) {
+    return <div class='post'>
+      <div class='post_date'>{ this.post.date }</div>
+      <div class='post_content' domPropsInnerHTML={ marked(this.post.body) }></div>
+    </div>
+  }
+})

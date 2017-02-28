@@ -22,7 +22,6 @@ module.exports = {
   devServer: {
     proxy: {
       '/b/*': {
-        target: 'http://localhost:8080',
         bypass: (req, res, proxyOptions) => { if (req.headers.accept.indexOf('html') !== -1) return '/index.html' }
       }
     }

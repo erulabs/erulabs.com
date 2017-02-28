@@ -8,7 +8,7 @@
     "sourceType": "module"
   },
   "env": {
-    "mocha": true
+    "browser": true
   },
   "rules": {
     "object-property-newline": 0,
