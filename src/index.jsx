@@ -9,7 +9,7 @@ let matchedPost = posts.find(p => p.file === requestedPath)
 
 if (matchedPost) {
   const request = new XMLHttpRequest()
-  request.open('GET', `/posts/${matchedPost.file}`, true)
+  request.open('GET', `/posts/${matchedPost.file}.md`, true)
   request.onload = function () {
     if (request.status === 200) {
       blog.post = {
@@ -23,7 +23,7 @@ if (matchedPost) {
   request.send()
 } else {
   matchedPost = posts[0]
-  matchedPost.body = require(`./posts/${posts[0].file}`)
+  matchedPost.body = require(`./posts/${posts[0].file}.md`)
 }
 
 const maxTitleLengthInSidebar = 35
