@@ -10,7 +10,7 @@ DEST="${SERVER}:${PROJECT_DOMAIN}"
 
 # For letsEncrypt
 REMOTE_ACME_DIR=".well-known/acme-challenge"
-LOCAL_ACME_DIR="./src/${REMOTE_ACME_DIR}"
+LOCAL_ACME_DIR="./${BUILD_DIRECTORY}/${REMOTE_ACME_DIR}"
 
 function error {
   echo "$1"

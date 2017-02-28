@@ -9,8 +9,9 @@ if ! [ -x "$(command -v rsync)" ]; then
   COMMAND="scp -r "
 fi
 
-${COMMAND} ./${BUILD_DIRECTORY} ${DEST}/
+${COMMAND} ./_build ${DEST}/
 ${COMMAND} ./inf ${DEST}/
+${COMMAND} ./secrets ${DEST}/
 
 ssh ${SERVER} "\
   sudo rsync -av --delete ~/${PROJECT_DOMAIN}/inf/nginx/* /etc/nginx/sites-enabled/ && \

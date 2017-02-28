@@ -10,5 +10,5 @@ fi
 if [ "$1" == "hook" ]; then
   mkdir -p ${LOCAL_ACME_DIR}
   echo "${CERTBOT_VALIDATION}" > "${LOCAL_ACME_DIR}/${CERTBOT_TOKEN}"
-  ${COMMAND} ${LOCAL_ACME_DIR}/* ${DEST}/${REMOTE_ACME_DIR}/
+  ./bin/deploy.sh
 fi

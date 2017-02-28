@@ -22,5 +22,4 @@ certbot -n \
 echo -e "\nRemoving tmp files..."
 rm -rfv ${LOCAL_ACME_DIR}
 
-echo -e "\nCopying certs..."
-cp -v tmp/le/live/seandonmooy.com/*.pem secrets/
+cp tmp/le/live/erulabs.com/*.pem secrets/
