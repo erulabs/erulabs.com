@@ -1,4 +1,5 @@
 
+const fs = require('fs')
 const webpack = require('webpack')
 const DEV_PORT = parseInt(process.env.DEV_PORT, 10) || 3005
 
@@ -20,8 +21,11 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/b/*': {
-        bypass: (req, res, proxyOptions) => { if (req.headers.accept.indexOf('html') !== -1) return '/index.html' }
+      '/': {
+        bypass: (req, res, proxyOptions) => {
+          if (req.path !== '/' && fs.existsSync(`_build${req.path}`)) return req.path
+          else return '/index.html'
+        }
       }
     }
   }

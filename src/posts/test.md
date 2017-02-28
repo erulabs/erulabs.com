@@ -1,3 +1,4 @@
 # Hello World
 Post body
-Oh wow it worksasdfsdf
+
+Hey cool its a totally static SPA! :D
