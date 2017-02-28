@@ -3,7 +3,8 @@ const webpack = require('webpack')
 const DEV_PORT = parseInt(process.env.DEV_PORT, 10) || 3005
 
 module.exports = {
-  entry: getEntrySources(['./src/seandonmooy.com/index.jsx']),
+  entry: getEntrySources(['./src/index.jsx']),
+  plugins: getPlugins(),
   output: {
     path: `${__dirname}/_build`,
     filename: 'index.js',
@@ -11,12 +12,10 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' },
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.less$/, loader: 'css-loader!less-loader' },
       { test: /\.md$/, loader: 'raw-loader' },
-      { test: /\.(jpe?g|png|gif|svg)$/i, loaders: [ 'url?limit=8192', 'img-loader' ] },
-      { test: /\.jsx$/, exclude: /node_modules/,
-        loaders: [ 'babel-loader' ] }
+      { test: /\.(jpe?g|png|gif|svg)$/i, loaders: [ 'url-loader?limit=8192', 'img-loader' ] },
+      { test: /\.jsx$/, exclude: /node_modules/, loaders: [ 'babel-loader' ] }
     ]
   },
   devServer: {
@@ -29,15 +28,10 @@ module.exports = {
 }
 
 function getPlugins () {
-  var plugins
-  if (process.env.NODE_ENV !== 'production') {
-    plugins = [
-      new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
-      new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } })
-    ]
-  }
-  return plugins
+  return [
+    new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
+    new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } })
+  ]
 }
 
 function getEntrySources (sources) {

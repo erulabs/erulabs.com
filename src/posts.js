@@ -1,4 +1,6 @@
 
+require('file-loader?name=posts/[name].[ext]!./posts/test.md')
+
 export default [
   {
     title: 'Title1',

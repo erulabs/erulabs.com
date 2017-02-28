@@ -4,15 +4,12 @@ import marked from 'marked'
 
 import posts from './posts.js'
 
-const CDN_URI = process.env.CDN_URI || ''
-const VERSION = process.env.VERSION || '1.0.0'
-
 const requestedPath = window.location.pathname.substr(1)
 let matchedPost = posts.find(p => p.file === requestedPath)
 
 if (matchedPost) {
   const request = new XMLHttpRequest()
-  request.open('GET', `${CDN_URI}/posts/${matchedPost.file}`, true)
+  request.open('GET', `/posts/${matchedPost.file}`, true)
   request.onload = function () {
     if (request.status === 200) blog.post.body = marked(request.responseText)
     else blog.post.body = `# Sorry\nThere appears to have been an error`

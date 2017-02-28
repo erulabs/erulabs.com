@@ -19,6 +19,15 @@ if ! [ -f "secrets/${PROJECT}_selfsigned.key" ]; then
 fi
 
 export NODE_ENV=development
-yarn --ignore-engines --no-progress --no-emoji
+./bin/build.sh
 
-DEV_PORT=${DEV_PORT} CDN_URI='' ./node_modules/.bin/gulp watch
+DEV_PORT=${DEV_PORT} ./node_modules/.bin/webpack-dev-server \
+  --https true \
+  --key ./secrets/${PROJECT}_selfsigned.key \
+  --cert ./secrets/${PROJECT}_selfsigned.crt \
+  --open \
+  --port ${DEV_PORT} \
+  --hot \
+  --content-base _build/ \
+  --colors \
+  --watch

@@ -11,6 +11,7 @@ echo "Building tag \"${TAG}\": ${RELEASE_TEXT}"
 echo "${RELEASE_TEXT}" > ./.release
 
 yarn --ignore-engines --no-progress --no-emoji
-rm -rf ./build
+rm -rf ./_build
 
+NODE_ENV=production ./node_modules/.bin/gulp
 NODE_ENV=production ./node_modules/.bin/webpack --progress --colors
