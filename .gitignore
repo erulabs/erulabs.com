@@ -10,7 +10,7 @@ node_modules
 secrets
 .release
 tmp
-src/www/.well-known
+src/.well-known
 
 # REMOVE THIS BEFORE GOING TO PROD
 yarn.lock

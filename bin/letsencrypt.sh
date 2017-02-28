@@ -23,3 +23,4 @@ echo -e "\nRemoving tmp files..."
 rm -rfv ${LOCAL_ACME_DIR}
 
 cp tmp/le/live/erulabs.com/*.pem secrets/
+rm -rf src/.well-known
