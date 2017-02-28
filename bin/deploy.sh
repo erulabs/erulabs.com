@@ -1,11 +1,14 @@
 #!/bin/bash -e
 source ./bin/_variables.sh
 
+echo "Uploading to ${PROJECT_BUCKET} ..."
+
 if ! [ -x "$(command -v gsutil)" ]; then
-  error "Please install 'gsutil' - via the Google Cloud SDK"
+  ~/AppData/Local/Google/Cloud\ SDK/google-cloud-sdk/platform/gsutil/gsutil -m rsync -R -c -d ./${BUILD_DIRECTORY} gs://${PROJECT_BUCKET}/
+else
+  gsutil -m rsync -R -c -d ./${BUILD_DIRECTORY} gs://${PROJECT_BUCKET}/
 fi
 
-echo "Uploading to ${PROJECT_BUCKET} ..."
-gsutil -m rsync -R -c -d ./${BUILD_DIRECTORY} gs://${PROJECT_BUCKET}/
+
 
 echo "Done!"

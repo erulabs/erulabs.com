@@ -3,7 +3,7 @@
 PROJECT="seandonmooycom"
 PROJECT_DOMAIN="seandonmooy.com"
 PROJECT_BUCKET="seandonmooy.com"
-BUILD_DIRECTORY="build"
+BUILD_DIRECTORY="_build"
 DEV_PORT="3005"
 
 # For letsEncrypt
