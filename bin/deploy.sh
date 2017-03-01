@@ -3,19 +3,16 @@ source ./bin/_variables.sh
 
 echo "Uploading to ${DEST} ..."
 
-COMMAND="rsync -arv"
-if ! [ -x "$(command -v rsync)" ]; then
-  echo "Falling back to scp"
-  COMMAND="scp -r "
-fi
-
-${COMMAND} ./_build ${DEST}/
-${COMMAND} ./inf ${DEST}/
-${COMMAND} ./secrets ${DEST}/
+rsync -arv --delete --delete-after \
+  --exclude="secrets/*selfsigned*" \
+  --exclude="secrets/dhparams.pem" \
+  ./secrets ./inf ./_build ${DEST}/
 
 ssh ${SERVER} "\
-  sudo rsync -av --delete ~/${PROJECT_DOMAIN}/inf/nginx/* /etc/nginx/sites-enabled/ && \
-  sudo service nginx reload
+  sudo /bin/cp -v /home/circleci/seandonmooy.com/inf/nginx/seandonmooy.conf /etc/nginx/sites-enabled/seandonmooy.conf && \
+  sudo /usr/sbin/service nginx reload && \
+  chown -v -R circleci:www-data seandonmooy.com/secrets seandonmooy.com/inf | fgrep -v retained && \
+  chmod -v 644 seandonmooy.com/secrets/*
 "
 
 echo "Done!"
