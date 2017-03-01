@@ -17,10 +17,15 @@ certbot -n \
   --agree-tos --manual-public-ip-logging-ok \
   --manual-auth-hook "./bin/letsencrypt_hooks.sh hook" \
   --manual-cleanup-hook "./bin/letsencrypt_hooks.sh cleanup" \
-  certonly
-
-echo -e "\nRemoving tmp files..."
-rm -rfv ${LOCAL_ACME_DIR}
+  certonly && {
 
 cp tmp/le/live/erulabs.com/*.pem secrets/
+
+rsync -arvc ./secrets ${DEST}/
+
+ssh ${SERVER} "sudo /usr/sbin/service nginx reload"
+
 rm -rf src/.well-known
+echo "Done!"
+
+} || echo "No action taken"
