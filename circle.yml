@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   pre:
-    - yarn || curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.21.3
+    - yarn --version || curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.21.3
   cache_directories:
     - ~/.yarn-cache
   override:
