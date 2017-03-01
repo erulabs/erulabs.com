@@ -12,6 +12,3 @@ secrets
 tmp
 src/.well-known
 secrets/dhparams.pem
-
-# REMOVE THIS BEFORE GOING TO PROD
-yarn.lock
