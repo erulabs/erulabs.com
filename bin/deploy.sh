@@ -1,7 +1,7 @@
 #!/bin/bash -e
 source ./bin/_variables.sh
 
-./bin/build.sh
+CDN_URI="https://${PROJECT_DOMAIN}" ./bin/build.sh
 
 echo "Uploading to ${DEST} ..."
 

@@ -14,7 +14,7 @@ const clientSync = browserSync.create()
 const tasks = {}
 
 const frontendPort = 3005
-const CDN_URI = process.env.CDN_URI || `https://localhost:${frontendPort}`
+const CDN_URI = process.env.CDN_URI || `/`
 
 const handleErrors = function (err) {
   gutil.log(err)
