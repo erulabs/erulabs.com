@@ -1,6 +1,8 @@
 #!/bin/bash -e
 source ./bin/_variables.sh
 
+./bin/build.sh
+
 echo "Uploading to ${DEST} ..."
 
 rsync -arc --delete --delete-after ./inf ./_build ${DEST}/ | fgrep "nginx" > /dev/null && {
