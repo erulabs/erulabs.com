@@ -1,0 +1,18 @@
+[ignore]
+.*/_build/.*
+.*/docs/.*
+.*/.git/.*
+.*/bin/.*
+.*/gulpfile.js
+.*/*.flow
+.*/node_modules/bcryptjs/src/bower.json
+.*/node_modules/node-uuid/lib/sha1-browser.js
+.*/node_modules/weinre/web/client/nls/English.lproj/localizedStrings.js
+
+[include]
+./src/
+
+[options]
+suppress_comment= \\(.\\|\n\\)*\\$FlowIssue
+esproposal.class_instance_fields=enable
+module.name_mapper='^_src\/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
