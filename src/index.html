@@ -3,24 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" href="$CDN_URI/favicon.png">
     <title>SeandonMooy.com</title>
-    <link rel="stylesheet" href="/index.css" type="text/css">
+    <link rel="stylesheet" href="$CDN_URI/index.css" type="text/css">
     <meta property="og:title" content="Seandon Mooy's Blog" />
     <meta property="og:type" content="website" />
     <meta name="description" content="I live in San Francisco and write computer programs. Read my blog if you're interested in DevOps, MySQL, Linux and performance tuning!" />
     <meta name="keywords" content="Linux, MySQL, DevOps, Linux, Performance tuning" />
     <meta property="og:description" content="I live in San Francisco and write computer programs. Read my blog if you're interested in DevOps, MySQL, Linux and performance tuning!" />
     <meta property="og:url" content="https://seandonmooy.com" />
-    <meta property="og:image" content="https://seandonmooy.com/assets/me.png" />
+    <meta property="og:image" content="$CDN_URI/assets/me.png" />
     <script type="text/javascript">
       window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};
       ga('create', 'UA-61925008-1', 'auto');
       ga('set', 'transport', 'beacon');
       ga('send', 'pageview');
     </script>
-    <script async type="text/javascript" src="https://www.google-analytics.com/analytics.js"></script>
-    <script async type="text/javascript" src="/index.js"></script>
   </head>
   <body>
     <div class='app'>
@@ -38,14 +36,20 @@
             <div class='less'>- - - - - - - - -</div>
             <div class='sidebarPosts'>
               Posts:
-              <div id='sidebarPosts'></div>
+              <div id='sidebarPosts'>
+                DATA_SIDEBAR_POSTS
+              </div>
             </div>
           </div>
           <div class='nine columns content'>
-            <div id='blog'></div>
+            <div class='blog'>
+              DATA_POST
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <script async type="text/javascript" src="https://www.google-analytics.com/analytics.js"></script>
+    <script async type="text/javascript" src="$CDN_URI/index.js"></script>
   </body>
 </html>

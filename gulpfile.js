@@ -1,3 +1,4 @@
+// @flow
 
 const fs = require('fs')
 const gulp = require('gulp')
@@ -7,7 +8,8 @@ const less = require('gulp-less')
 const replace = require('gulp-replace')
 const cleanCSS = require('gulp-clean-css')
 
-// gutil.log = gutil.noop
+const buildPages = require('./buildPages')
+
 const clientSync = browserSync.create()
 const tasks = {}
 
@@ -23,24 +25,33 @@ function doCopy (version, name, ext, dest) {
   if (!dest) dest = name
   const iName = [name, 'html'].join('')
   tasks[iName] = function () {
-    return gulp.src([`./src/${name}/**/${ext}`]).on('error', handleErrors)
-    .pipe(gulp.dest(`./_build/${dest}/`)).pipe(clientSync.stream())
+    return gulp
+      .src([`./src/${name}/**/${ext}`])
+      .on('error', handleErrors)
+      .pipe(gulp.dest(`./_build/${dest}/`))
+      .pipe(clientSync.stream())
   }
   gulp.task(iName, tasks[iName])
 }
 function doHtml (version, name) {
   const iName = [name, 'html'].join('')
   tasks[iName] = function () {
-    return gulp.src([`./src/*.html`]).on('error', handleErrors)
-    .pipe(replace('$CDN_URI', CDN_URI)).pipe(replace('$VERSION', version))
-    .pipe(gulp.dest(`./_build/`)).pipe(clientSync.stream())
+    return gulp
+      .src([`./src/*.html`])
+      .on('error', handleErrors)
+      .pipe(replace('$CDN_URI', CDN_URI))
+      .pipe(replace('$VERSION', version))
+      .pipe(buildPages())
+      .pipe(gulp.dest(`./_build/`))
+      .pipe(clientSync.stream())
   }
   gulp.task(iName, tasks[iName])
 }
 function doLess (version, name) {
   const iName = [name, 'less'].join('')
   tasks[iName] = function () {
-    return gulp.src([`./src/*.less`])
+    return gulp
+      .src([`./src/*.less`])
       .pipe(less({}))
       .pipe(cleanCSS())
       .on('error', handleErrors)
@@ -50,7 +61,10 @@ function doLess (version, name) {
   gulp.task(iName, tasks[iName])
 }
 
-const WWW_VERSION = fs.readFileSync('./src/version.txt').toString().split('\n')[0]
+const WWW_VERSION = fs
+  .readFileSync('./src/version.txt')
+  .toString()
+  .split('\n')[0]
 doCopy(WWW_VERSION, 'assets')
 doCopy(WWW_VERSION, 'posts')
 doHtml(WWW_VERSION)

@@ -6,12 +6,8 @@ It's also about the 15th rewrite of this site, so thanks for coming back!
 
 ## Design
 
-### Single server?
-Yeah, yeah, it's not on S3 or GCS, etc. I've grown tired of their lack of options and sub-par performance. Additionally, the lack of capacity, insane amount of cost, and lack of features of almost all CDN providers is prohibative to using a bucket setup. If one reaches the point where traffic can cripple a single box, it should be very easy to change the `./bin/deploy.sh` script to use `gcloud` or `aws` or anything else instead of `rsync` and pay for a CDN provider - However, this site is designed for ultra low cost and bleeding edge features (http2, A+ SSL)
-### Vue v React
-I've been learning both - and as I am primarily a devops / database engineer and thus frontend development scares me, I have chosen to go with Vue for its simplicity. Additionally, vue weighs a lot less, and this site is very simple!
-### Webpack and Gulp?
-Yes, both... I have yet to decide the best setup for SPA development - pull requests welcome! I have intentionally _not_ included the files directly into the webpack bundle, this is mostly to keep the output JS as small and simple as possible. I would like to disable more transformations and remove more dependencies if possible!
+### Static HTML generator
+Gulp runs `/buildPages.js` ([src](https://github.com/erulabs/seandonmooy.com/blob/master/buildPages.js)) which turns the /posts/ directory into a listing of static HTML files!
 
 ## Setup
 The only missing bits from the repository are as follows:
@@ -41,4 +37,4 @@ to your `/etc/sudoers` file with `visudo`. Obviously, you'll also want to add an
 
 ### 4. Some blog posts!
 
-Just modify posts in `./src/posts/` while running `./bin/dev.sh`!
+Just modify posts in `./posts/` while running `./bin/dev.sh`!

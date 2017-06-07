@@ -1,36 +1,22 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "standard",
-    "plugin:flowtype/recommended"
+    "standard"
   ],
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true,
       "modules": true
     }
   },
   "rules": {
-    "react/jsx-uses-vars": 2,
-    "flowtype/require-valid-file-annotation": [
-      2,
-      "always"
-    ],
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-unused-vars": [2, {"vars": "all", "args": "none", "varsIgnorePattern": "^React$"}],
     "standard/computed-property-even-spacing": 0
   },
   "plugins": [
-    "react",
-    "flowtype"
   ],
   "settings": {
-    "react": {
-      "pragma": "React"
-    }
   },
   "globals": {
-    "State": true,
-    "fetch": true
   }
 }
