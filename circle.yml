@@ -12,10 +12,6 @@ dependencies:
   override:
     - yarn install --no-progress --no-emoji
 
-compile:
-  override:
-    - ./bin/build.sh
-
 test:
   override:
     - ./bin/lint.sh

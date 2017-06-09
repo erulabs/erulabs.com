@@ -10,8 +10,8 @@ RELEASE_TEXT="$COMMIT_SHORT: $AUTHOR '$COMMIT_MSG'"
 echo "Building tag \"${TAG}\": ${RELEASE_TEXT}"
 echo "${RELEASE_TEXT}" > ./.release
 
-yarn --ignore-engines --no-progress --no-emoji
+NODE_ENV=development yarn --ignore-engines --no-progress --no-emoji
 rm -rf ./_build
 
-NODE_ENV=production ./node_modules/.bin/gulp
-NODE_ENV=production ./node_modules/.bin/webpack --progress --colors
+./node_modules/.bin/gulp
+./node_modules/.bin/webpack --progress --colors
