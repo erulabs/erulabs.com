@@ -13,8 +13,7 @@ const buildPages = require('./buildPages')
 const clientSync = browserSync.create()
 const tasks = {}
 
-const frontendPort = 3005
-const CDN_URI = process.env.CDN_URI || `/`
+const CDN_URI = process.env.CDN_URI || ''
 
 const handleErrors = function (err) {
   gutil.log(err)
@@ -73,9 +72,16 @@ doLess(WWW_VERSION)
 
 gulp.task('default', Object.keys(tasks))
 
-gulp.task('watch', ['default'], function () {
+gulp.task('watch', ['default'], () => {
+  clientSync.init({
+    server: {
+      baseDir: './_build'
+    },
+    port: 3000
+  })
+
   gulp.watch('./src/*.html', ['html'])
   gulp.watch('./src/*.less', ['less'])
   gulp.watch('./src/assets/**/*', ['assets-copy'])
-  gulp.watch('./src/posts/**/*', ['posts-copy'])
+  gulp.watch('./posts/*.md', ['html'])
 })
