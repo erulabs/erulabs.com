@@ -34,9 +34,9 @@ module.exports = function () {
             marked(fs.readFileSync(postsDir + '/' + results[i]).toString()) +
             `</div>`
       })
-      sidebar.push(
+      sidebar.unshift(
         '<div>#' +
-          (i + 1) +
+          (results.length - i) +
           '. <a href="/posts/' +
           results[i].replace('.md', '.html') +
           '?v=' +
@@ -78,8 +78,8 @@ module.exports = function () {
           .replace('DATA_POST', marked(posts[0].content).toString())
       )
       output.push(file)
-      // cb(null, file)
       this.push(file)
+      cb(null, file)
     } else if (file.isStream()) {
       process.stderr.write('buildPages got stream instead of buffer!')
       process.exit(1)

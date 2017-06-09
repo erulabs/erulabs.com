@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/erulabs/seandonmooy.com#readme",
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "browser-sync": "^2.18.12",
     "css-loader": "^0.28.4",
     "eslint": "^3.19.0",
