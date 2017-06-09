@@ -17,30 +17,41 @@ module.exports = function () {
       process.stderr.write('Couldnt stat ' + postsDir)
       throw err
     }
+    let postNum = 1
     for (let i = 0; i < results.length; i++) {
+      if (results[i].substr(-3) !== '.md') continue
       const title = results[i]
         .replace(new RegExp(/[0-9]+_/, 'g'), '')
         .replace(new RegExp('_', 'g'), ' ')
         .replace('.md', '')
-      const time = fs.statSync(postsDir + '/' + results[i]).ctime.getTime()
+      // const ctime = fs.statSync(postsDir + '/' + results[i]).ctime.getTime()
+      const matchTime = /DATE: (\d+)/
+      let postContent = fs.readFileSync(postsDir + '/' + results[i]).toString()
+      const dateMatches = matchTime.exec(postContent)
+      if (dateMatches) {
+        postContent = postContent.replace(
+          dateMatches[0],
+          `<div class='post_date'>` +
+            moment.unix(dateMatches[1]).calendar() +
+            `</div>`
+        )
+      }
       posts.push({
         filename: results[i],
         title: title,
         content:
-          `<div class='post_date'>` +
-            moment(time).calendar() +
-            `</div>` +
-            `<div class='post_content'>` +
-            marked(fs.readFileSync(postsDir + '/' + results[i]).toString()) +
+          `<div class='post_content'>` +
+            marked(postContent) +
+            `</div><div class='post_footer'><a href="https://github.com/erulabs/seandonmooy.com/commits/master/posts/${results[
+              i
+            ]}">See revisions to article</a>` +
             `</div>`
       })
       sidebar.unshift(
         '<div>#' +
-          (results.length - i) +
+          postNum++ +
           '. <a href="/posts/' +
           results[i].replace('.md', '.html') +
-          '?v=' +
-          time +
           '" alt="' +
           title +
           '">',
@@ -75,7 +86,10 @@ module.exports = function () {
       file.contents = Buffer.from(
         contents
           .replace('DATA_SIDEBAR_POSTS', sidebar.join(''))
-          .replace('DATA_POST', marked(posts[0].content).toString())
+          .replace(
+            'DATA_POST',
+            marked(posts[posts.length - 1].content).toString()
+          )
       )
       output.push(file)
       this.push(file)

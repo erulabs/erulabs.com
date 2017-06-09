@@ -1,4 +1,5 @@
 # Hello World
+DATE: 1494561275
 
 This is a 100% static site with some neat blog-like features, an ultra simple codebase, and is also 100% open-source! In fact, you're reading the [README.md](https://github.com/erulabs/seandonmooy.com/blob/master/README.md) right now! Gulp runs `/buildPages.js` ([src](https://github.com/erulabs/seandonmooy.com/blob/master/buildPages.js)) which turns the /posts/ directory into a listing of static HTML files!
 
