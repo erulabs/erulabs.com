@@ -39,6 +39,8 @@ module.exports = function () {
           (i + 1) +
           '. <a href="/posts/' +
           results[i].replace('.md', '.html') +
+          '?v=' +
+          time +
           '" alt="' +
           title +
           '">',
