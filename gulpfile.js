@@ -22,7 +22,7 @@ const handleErrors = function (err) {
 function doCopy (version, name, ext, dest) {
   if (!ext) ext = '*'
   if (!dest) dest = name
-  const iName = [name, 'html'].join('')
+  const iName = [name, 'copy'].join('')
   tasks[iName] = function () {
     return gulp
       .src([`./src/${name}/**/${ext}`])
@@ -82,6 +82,6 @@ gulp.task('watch', ['default'], () => {
 
   gulp.watch('./src/*.html', ['html'])
   gulp.watch('./src/*.less', ['less'])
-  gulp.watch('./src/assets/**/*', ['assets-copy'])
+  gulp.watch('./src/assets/**/*', ['assetscopy'])
   gulp.watch('./posts/*.md', ['html'])
 })

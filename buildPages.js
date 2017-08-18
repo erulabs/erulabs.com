@@ -20,13 +20,11 @@ module.exports = function () {
     let postNum = 1
     for (let i = 0; i < results.length; i++) {
       if (results[i].substr(-3) !== '.md') continue
-      const title = results[i]
-        .replace(new RegExp(/[0-9]+_/, 'g'), '')
-        .replace(new RegExp('_', 'g'), ' ')
-        .replace('.md', '')
-      // const ctime = fs.statSync(postsDir + '/' + results[i]).ctime.getTime()
       const matchTime = /DATE: (\d+)/
       let postContent = fs.readFileSync(postsDir + '/' + results[i]).toString()
+      const title = postContent
+        .substr(0, postContent.indexOf('\n'))
+        .replace('#', '')
       const dateMatches = matchTime.exec(postContent)
       if (dateMatches) {
         postContent = postContent.replace(
