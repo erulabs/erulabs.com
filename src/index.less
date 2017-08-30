@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,300,500);
 
 @import (inline) "./../node_modules/normalize.css/normalize.css";
 @import (inline) "./../node_modules/skeleton-css/css/skeleton.css";
@@ -6,46 +8,46 @@ body, html {
   margin: 0px;
   padding: 0px;
   -webkit-font-smoothing: antialiased;
-  font-family: monospace;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #000;
   background-image: url(/assets/crossword.png);
 }
 .more {
   font-weight: bolder;
-  font-size: 1em;
-  a {
-    text-decoration: none;
-    color: #000;
-  }
+  font-size: 1.4em;
 }
 .less {
   color: #aaa;
 }
 .small {
-  font-size: 0.8em;
+  font-size: 1em;
 }
 .large {
-  font-size: 1.2em;
+  font-size: 1.4em;
+}
+a {
+  text-decoration: none;
+  color: #53af3b;
 }
 .sidebar {
+  font-size: 0.9em;
   margin-top: 8em;
   padding: 1em;
   .sidebarPosts {
-    .postsTitle {
-      font-size: 1.2em;
-      color: #000;
-    }
-    font-size: 0.8em;
-    color: #aaa;
-    a {
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    a {
-      color: #000;
+    ul {
+      list-style-type: upper-roman;
+      padding: 0;
+      margin: 0;
+      a {
+        font-size: 1em;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      li {
+        margin: 0;
+      }
     }
   }
 }
@@ -57,13 +59,13 @@ body, html {
       color: #aaa;
       position: relative;
       top: 0.3em;
-      margin-bottom: 1em;
+      margin-bottom: 0.7em;
       position: relative;
       top: -5px;
     }
     .post_content {
       h1 {
-        font-size: 3em;
+        font-size: 4em;
         margin-bottom: 0.1em;
       }
       h2 {
@@ -80,13 +82,25 @@ body, html {
       }
       code {
         overflow-x: scroll;
+        padding: .1rem .2rem;
+        margin: 0 .2rem;
+        font-size: 90%;
+        white-space: nowrap;
+        background: #fff;
+        color: #53af3b;
+        font-weight: bold;
+        border-radius: 4px;
       }
-      .centered {
-        margin: 0 auto;
-        text-align: center;
-        img {
-
-        }
+      p {
+        margin-bottom: 1.5rem;
+      }
+      pre {
+        white-space: pre-wrap;       /* css-3 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        margin-bottom: 1em;
       }
     }
     .post_footer {
@@ -95,11 +109,4 @@ body, html {
       margin-bottom: 2em;
     }
   }
-}
-pre {
-  white-space: pre-wrap;       /* css-3 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }

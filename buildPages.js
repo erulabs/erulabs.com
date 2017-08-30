@@ -17,21 +17,22 @@ module.exports = function () {
       process.stderr.write('Couldnt stat ' + postsDir)
       throw err
     }
-    let postNum = 1
     for (let i = 0; i < results.length; i++) {
       if (results[i].substr(-3) !== '.md') continue
+      const title = results[i]
+        .replace(new RegExp(/[0-9]+_/, 'g'), '')
+        .replace(new RegExp('_', 'g'), ' ')
+        .replace('.md', '')
+      // const ctime = fs.statSync(postsDir + '/' + results[i]).ctime.getTime()
       const matchTime = /DATE: (\d+)/
       let postContent = fs.readFileSync(postsDir + '/' + results[i]).toString()
-      const title = postContent
-        .substr(0, postContent.indexOf('\n'))
-        .replace('#', '')
       const dateMatches = matchTime.exec(postContent)
       if (dateMatches) {
         postContent = postContent.replace(
           dateMatches[0],
-          `<div class='post_date'>` +
+          `<div class='post_date'>Posted ` +
             moment.unix(dateMatches[1]).calendar() +
-            `</div>`
+            ` by Seandon Mooy</div>`
         )
       }
       posts.push({
@@ -39,22 +40,20 @@ module.exports = function () {
         title: title,
         content:
           `<div class='post_content'>` +
-            marked(postContent) +
-            `</div><div class='post_footer'><a href="https://github.com/erulabs/seandonmooy.com/commits/master/posts/${results[
-              i
-            ]}">See revisions to article</a>` +
-            `</div>`
+          marked(postContent) +
+          `</div><div class='post_footer'><a href="https://github.com/erulabs/seandonmooy.com/commits/master/posts/${results[
+            i
+          ]}">See revisions to article</a>` +
+          `</div>`
       })
       sidebar.unshift(
-        '<div>#' +
-          postNum++ +
-          '. <a href="/posts/' +
+        '<li><a href="/posts/' +
           results[i].replace('.md', '.html') +
           '" alt="' +
           title +
           '">',
         title,
-        '</a></div>'
+        '</a></li>'
       )
     }
   })
