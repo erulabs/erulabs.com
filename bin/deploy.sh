@@ -9,7 +9,8 @@ rsync -arc --delete --delete-after ./inf ./_build ${DEST}/ | fgrep "nginx" > /de
   echo "Reloading nginx"
   ssh ${SERVER} "\
     ! command -v nginx && apt-get install -yqq nginx && \
-    sudo /bin/cp /home/circleci/erulabs.com/inf/nginx/erulabs.conf /etc/nginx/sites-enabled/erulabs.conf && \
+    sudo rm /etc/nginx/sites-enabled/default && \
+    sudo /bin/cp -v /www/erulabs.com/inf/nginx/erulabs.conf /etc/nginx/sites-enabled/erulabs.conf && \
     sudo /usr/sbin/service nginx reload
   "
 }
