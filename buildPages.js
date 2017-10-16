@@ -41,7 +41,7 @@ module.exports = function () {
         content:
           `<div class='post_content'>` +
           marked(postContent) +
-          `</div><div class='post_footer'><a href="https://github.com/erulabs/seandonmooy.com/commits/master/posts/${results[
+          `</div><div class='post_footer'><a href="https://github.com/erulabs/erulabs.com/commits/master/posts/${results[
             i
           ]}">See revisions to article</a>` +
           `</div>`

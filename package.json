@@ -1,5 +1,5 @@
 {
-  "name": "seandonmooy.com",
+  "name": "erulabs.com",
   "version": "1.0.0",
   "description": "Seandon Mooy's personal website",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/erulabs/seandonmooy.com.git"
+    "url": "git+ssh://git@github.com/erulabs/erulabs.com.git"
   },
   "author": "Seandon Mooy",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/erulabs/seandonmooy.com/issues"
+    "url": "https://github.com/erulabs/erulabs.com/issues"
   },
-  "homepage": "https://github.com/erulabs/seandonmooy.com#readme",
+  "homepage": "https://github.com/erulabs/erulabs.com#readme",
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "browser-sync": "^2.18.12",

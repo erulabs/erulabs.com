@@ -1,11 +1,11 @@
 #!/bin/bash -e
 
-PROJECT="seandonmooycom"
-PROJECT_DOMAIN="seandonmooy.com"
+PROJECT="erulabscom"
+PROJECT_DOMAIN="erulabs.com"
 BUILD_DIRECTORY="_build"
 DEV_PORT="3005"
 
-DEFAULT_USERNAME="circleci"
+DEFAULT_USERNAME="erulabscom"
 
 SERVER="${SSH_USER:-${DEFAULT_USERNAME}}@${PROJECT_DOMAIN}"
 DEST="${SERVER}:~${DEFAULT_USERNAME}/${PROJECT_DOMAIN}"

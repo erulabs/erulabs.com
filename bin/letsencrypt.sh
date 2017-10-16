@@ -10,9 +10,9 @@ certbot -n \
   --logs-dir tmp/le \
   --manual \
   -d erulabs.com \
-  -d seandonmooy.com \
+  -d erulabs.com \
   -d www.erulabs.com \
-  -d www.seandonmooy.com \
+  -d www.erulabs.com \
   -m seandon.mooy@gmail.com \
   --agree-tos --manual-public-ip-logging-ok \
   --manual-auth-hook "./bin/letsencrypt_hooks.sh hook" \

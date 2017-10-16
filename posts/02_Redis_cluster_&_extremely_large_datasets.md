@@ -5,7 +5,9 @@ Redis is a very attractive option for web applications these days - particularly
 
 However, dealing with extremely large data sets in memory becomes non-trivial. Under heavy transaction loads and with large amounts of memory, the amount of time redis takes to call `fork()` starts to become painful:
 
+<div class='centered'>
 ![fork latency](/assets/02/redis_fork_usec.png "Redis fork latency")
+</div>
 
 This data is from three production redis 3.2.8 AWS 'r4' instances under load with the 4.4.0-1016-aws kernel. At this point, you'll want to look to Redis Cluster to help shard the memory set.
 

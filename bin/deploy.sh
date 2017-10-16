@@ -8,7 +8,7 @@ echo "Uploading to ${DEST} ..."
 rsync -arc --delete --delete-after ./inf ./_build ${DEST}/ | fgrep "nginx" > /dev/null && {
   echo "Reloading nginx"
   ssh ${SERVER} "\
-    sudo /bin/cp /home/circleci/seandonmooy.com/inf/nginx/seandonmooy.conf /etc/nginx/sites-enabled/seandonmooy.conf && \
+    sudo /bin/cp /home/circleci/erulabs.com/inf/nginx/seandonmooy.conf /etc/nginx/sites-enabled/seandonmooy.conf && \
     sudo /usr/sbin/service nginx reload
   "
 }
