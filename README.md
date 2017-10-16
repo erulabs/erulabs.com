@@ -17,12 +17,12 @@ If this is the only site you're hosting, you literally cannot go small enough he
 ### 2. A non-ssl bootstrap:
 First, modify all the references to my website in `./bin/_variables.sh`.
 
-Assuming you don't already have SSL certificates and want to use the LetsEncrypt setup here, you'll need to comment out the [SSL section of the nginx configuration](https://github.com/erulabs/erulabs.com/blob/master/inf/nginx/seandonmooy.conf#L12-L43) and run `./bin/deploy.sh`, then `./bin/letsencrypt.sh` - IE: You need a working HTTP service to collect your initial SSL certificates.
+Assuming you don't already have SSL certificates and want to use the LetsEncrypt setup here, you'll need to comment out the [SSL section of the nginx configuration](https://github.com/erulabs/erulabs.com/blob/master/inf/nginx/erulabs.conf#L12-L43) and run `./bin/deploy.sh`, then `./bin/letsencrypt.sh` - IE: You need a working HTTP service to collect your initial SSL certificates.
 
 ### 3. Permissions for the `circleci` user
 The circleci user needs to be allowed to run two commands - copying the nginx configuration file and reloading nginx (see `./bin/deploy.sh`). You'll want to add:
 ```bash
-Cmnd_Alias DEPLOY_CMDS = /bin/cp /home/circleci/erulabs.com/inf/nginx/seandonmooy.conf /etc/nginx/sites-enabled/seandonmooy.conf, /usr/sbin/service nginx reload
+Cmnd_Alias DEPLOY_CMDS = /bin/cp /home/circleci/erulabs.com/inf/nginx/erulabs.conf /etc/nginx/sites-enabled/erulabs.conf, /usr/sbin/service nginx reload
 circleci ALL=(ALL) NOPASSWD: DEPLOY_CMDS
 ```
 to your `/etc/sudoers` file with `visudo`. Obviously, you'll also want to add an SSH key that circleci can use to deploy with!
