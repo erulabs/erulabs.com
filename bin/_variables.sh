@@ -8,7 +8,8 @@ DEV_PORT="3005"
 DEFAULT_USERNAME="eru"
 
 SERVER="${SSH_USER:-${DEFAULT_USERNAME}}@${PROJECT_DOMAIN}"
-DEST="${SERVER}:/www/${PROJECT_DOMAIN}"
+DEST_DIR="/www/${PROJECT_DOMAIN}"
+DEST="${SERVER}:${DEST_DIR}"
 
 # For letsEncrypt
 REMOTE_ACME_DIR=".well-known/acme-challenge"
