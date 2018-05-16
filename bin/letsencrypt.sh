@@ -9,10 +9,11 @@ certbot -n \
   --work-dir tmp/le \
   --logs-dir tmp/le \
   --manual \
-  -d erulabs.com \
+  --expand \
   -d erulabs.com \
   -d www.erulabs.com \
-  -d www.erulabs.com \
+  -d mooy.app \
+  -d www.mooy.app \
   -m seandon.mooy@gmail.com \
   --agree-tos --manual-public-ip-logging-ok \
   --manual-auth-hook "./bin/letsencrypt_hooks.sh hook" \
@@ -23,7 +24,10 @@ cp tmp/le/live/erulabs.com/*.pem secrets/
 
 rsync -arvc ./secrets ${DEST}/
 
-ssh ${SERVER} "sudo /usr/sbin/service nginx reload"
+ssh ${SERVER} "\
+	chown -R ${DEFAULT_USERNAME}:www-data ${DEST} && \
+        chmod 640 ${DEST}/secrets/* && \
+	sudo /usr/sbin/service nginx reload"
 
 rm -rf src/.well-known
 echo "Done!"

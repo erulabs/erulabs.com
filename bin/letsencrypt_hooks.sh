@@ -10,5 +10,6 @@ fi
 if [ "$1" == "hook" ]; then
   mkdir -p ${LOCAL_ACME_DIR}
   echo "${CERTBOT_VALIDATION}" > "${LOCAL_ACME_DIR}/${CERTBOT_TOKEN}"
-  ./bin/deploy.sh
+  echo "CERTBOT_VALIDATION IS: ${CERTBOT_VALIDATION}"
+  rsync -arvc ./_build ${DEST}/
 fi
