@@ -1,56 +1,83 @@
 // @flow
 
-const fs = require('fs')
+const path = require('path')
 const webpack = require('webpack')
-const DEV_PORT = parseInt(process.env.DEV_PORT, 10) || 3005
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: getEntrySources(['./src/index.js']),
-  plugins: getPlugins(),
+  mode: process.env.NODE_ENV || 'development',
+  entry: './src/index.js',
   output: {
-    path: `${__dirname}/_build`,
-    filename: 'index.js',
-    sourceMapFilename: 'index.js.map'
+    pathinfo: true,
+    path: path.resolve(__dirname, '_build', 'www'),
+    publicPath: process.env.ASSETS_PUBLIC_PATH,
+    filename: `assets/[name]-[hash].js`,
+    chunkFilename: 'assets/[name].chunk.js',
+    devtoolModuleFilenameTemplate: (info /*: Object */) => {
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+    }
   },
+  devtool: 'cheap-module-source-map',
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        VERSION: JSON.stringify(process.env.VERSION)
+      }
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+  ],
   module: {
-    loaders: [
+    rules: [
       { test: /\.less$/, loader: 'css-loader!less-loader' },
       { test: /\.md$/, loader: 'raw-loader' },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: ['url-loader?limit=8192', 'img-loader']
+        test: /(robots\.txt)$/,
+        use: [`file-loader?name=assets/[name].[ext]`]
+      },
+      {
+        test: /\.(css)$/,
+        use: [
+          { loader: `style-loader` },
+          {
+            loader: `css-loader?name=assets/[name]-[hash].[ext]`
+          }
+        ]
+      },
+      {
+        test: /\.(xml|fbx|ico|otf|eot|svg|ttf|woff|woff2)$/,
+        use: [`file-loader?name=assets/[name]-[hash].[ext]`]
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: ['file-loader?name=assets/[name]-[hash].[ext]']
       }
     ]
   },
+
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: 'vendors'
+    },
+    runtimeChunk: true
+  },
+
   devServer: {
-    proxy: {
-      '/': {
-        // $FlowIssue
-        bypass: (req, res, proxyOptions) => {
-          if (req.path !== '/' && fs.existsSync(`_build${req.path}`)) {
-            return req.path
-          } else return '/index.html'
-        }
-      }
+    contentBase: path.join(__dirname, '_build', 'www'), // boolean | string | array, static file location
+    publicPath: process.env.ASSETS_PUBLIC_PATH,
+    port: 30005,
+    compress: true, // enable gzip compression
+    historyApiFallback: true, // true for index.html upon 404, object for multiple paths
+    hot: false, // hot module replacement. Depends on HotModuleReplacementPlugin
+    https: true, // true for self-signed, object for cert authority
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
     }
   }
-}
-
-function getPlugins () {
-  return [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } })
-  ]
-}
-
-function getEntrySources (sources) {
-  if (process.env.NODE_ENV !== 'production') {
-    sources.push(`webpack-dev-server/client?http://localhost:${DEV_PORT}`)
-    sources.push('webpack/hot/only-dev-server')
-  }
-  return sources
 }
