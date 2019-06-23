@@ -1,10 +1,7 @@
 #!/bin/bash -e
+source ./bin/_variables.sh
 
-BUILD_DIRECTORY="build"
-SERVER="erulabs.com"
-DEST_DIR="/www/erulabscom"
-DEST="${SERVER}:${DEST_DIR}"
-
+yarn
 yarn build
 
 echo "Uploading to ${DEST} ..."

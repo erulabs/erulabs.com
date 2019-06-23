@@ -1,4 +1,5 @@
 #!/bin/bash -e
+source ./bin/_variables.sh
 
 mkdir -p tmp/le
 mkdir -p secrets
@@ -24,7 +25,7 @@ cp tmp/le/live/erulabs.com/*.pem secrets/
 rsync -arvc ./secrets ${DEST}/
 
 ssh ${SERVER} "\
-	chown -R ${DEFAULT_USERNAME}:www-data ${DEST} && \
+	chown -R eru:www-data ${DEST} && \
         chmod 640 ${DEST}/secrets/* && \
 	sudo /usr/sbin/service nginx reload"
 
