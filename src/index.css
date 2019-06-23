@@ -1,13 +1,138 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Roboto Medium"), local("Roboto-Medium"),
+    url(https://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmEU9fBBc4.woff2)
+      format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Montserrat Regular"), local("Montserrat-Regular"),
+    url(https://fonts.gstatic.com/s/montserrat/v13/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2)
+      format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body,
+html {
+  margin: 0px;
+  padding: 0px;
+  -webkit-font-smoothing: antialiased;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  background-image: url(/assets/crossword.png);
+}
+.more {
+  font-weight: bolder;
+  font-size: 1.4em;
+}
+.less {
+  color: #aaa;
+}
+.small {
+  font-size: 1em;
+}
+.large {
+  font-size: 1.4em;
+}
+a {
+  text-decoration: none;
+  color: #53af3b;
+}
+.sidebar {
+  font-size: 0.9em;
+  margin-top: 8em;
+  padding: 1em;
+}
+
+.sidebar .sidebarPosts ul {
+  list-style-type: upper-roman;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar .sidebarPosts ul a {
+  font-size: 1em;
+}
+.sidebar .sidebarPosts ul a:hover {
+  text-decoration: underline;
+}
+.sidebar .sidebarPosts ul li {
+  margin: 0;
+}
+
+.content {
+  margin-top: 4em;
+}
+.blog {
+  margin-top: 1em;
+}
+
+.post_date {
+  color: #aaa;
+  position: relative;
+  top: 0.3em;
+  margin-bottom: 0.7em;
+  position: relative;
+  top: -5px;
+}
+
+.post_content h1 {
+  font-size: 4em;
+  margin-bottom: 0.1em;
+}
+.post_content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.2em;
+}
+.post_content h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.3em;
+}
+.post_content h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.3em;
+}
+.post_content code {
+  overflow-x: scroll;
+  padding: 0.1rem 0.2rem;
+  margin: 0 0.2rem;
+  font-size: 90%;
+  white-space: nowrap;
+  background: #fff;
+  color: #53af3b;
+  font-weight: bold;
+  border-radius: 4px;
+}
+.post_content p {
+  margin-bottom: 1.5rem;
+}
+.post_content pre {
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
+  margin-bottom: 1em;
+}
+.post_content .centered {
+  width: 100%;
+  text-align: center;
+}
+
+.post_footer {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 2em;
 }
