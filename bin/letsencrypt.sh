@@ -11,9 +11,7 @@ certbot -n \
   --manual \
   --expand \
   -d erulabs.com \
-  -d www.erulabs.com \
-  -d mooy.app \
-  -d www.mooy.app \
+  -d seandonmooy.com \
   -m seandon.mooy@gmail.com \
   --agree-tos --manual-public-ip-logging-ok \
   --manual-auth-hook "./bin/letsencrypt_hooks.sh hook" \

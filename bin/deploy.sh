@@ -8,7 +8,7 @@ echo "Uploading to ${DEST} ..."
 
 rsync -arcv ./secrets ${DEST}/
 
-rsync -arcv --delete --delete-after ./inf ./_build ${DEST}/ | fgrep "nginx" > /dev/null && {
+rsync -arcv --delete --delete-after ./inf ./build ${DEST}/ | fgrep "nginx" > /dev/null && {
   echo "Reloading nginx"
   ssh ${SERVER} "\
     { ! -f ${DEST}/secrets/dhparams.pem && openssl dhparam -out ${DEST}/secrets/dhparams.pem 4096 } && \
