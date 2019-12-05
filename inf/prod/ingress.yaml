@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: erulabscom
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: erulabscom
+              servicePort: 5000
+

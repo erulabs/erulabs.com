@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: erulabscom-frontend
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: erulabscom-frontend
+              servicePort: 8080
+      host: erulabs.com
+
