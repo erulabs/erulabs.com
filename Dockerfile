@@ -1,3 +1,3 @@
 FROM node
 
-RUN echo "Hello"
+RUN echo "Hello world"
