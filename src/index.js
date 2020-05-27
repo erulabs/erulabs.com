@@ -1,3 +1,0 @@
-// @flow
-
-// Nothing here
