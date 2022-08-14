@@ -1,0 +1,29 @@
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: seandonmooy
+  labels:
+    app: seandonmooy
+  annotations:
+    cert-manager.io/cluster-issuer: kubesail-letsencrypt
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/default-backend: www
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/http2-push-preload: "true"
+spec:
+  tls:
+    - hosts:
+        - seandonmooy.com
+      secretName: seandonmooy
+  rules:
+    - host: seandonmooy.com
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: www
+                port:
+                  name: https-ports

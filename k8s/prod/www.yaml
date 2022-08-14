@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: www
+spec:
+  template:
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: www
+          command: ["node", "https-server.js"]
+          volumeMounts:
+            - name: service-cert
+              mountPath: "/app/secrets"
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: NEXT_HOSTNAME
+              value: seandonmooy.com
+      volumes:
+        - name: service-cert
+          secret:
+            secretName: service-cert

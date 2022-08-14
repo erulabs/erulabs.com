@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: www
+  labels:
+    app: www
+    logs: json
+spec:
+  selector:
+    matchLabels:
+      app: www
+  minReadySeconds: 1
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "5000"
+        prometheus.io/scrape: "true"
+      labels:
+        app: www
+    spec:
+      containers:
+        - name: www
+          image: erulabs/seandonmooy
+          imagePullPolicy: IfNotPresent
+          terminationMessagePolicy: FallbackToLogsOnError
+          ports:
+            - name: https-ports
+              containerPort: 3003
+            - name: metrics
+              containerPort: 5000
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: www
+spec:
+  ports:
+    - name: https-ports
+      port: 3003
+      protocol: TCP
+      targetPort: https-ports
+  selector:
+    app: www

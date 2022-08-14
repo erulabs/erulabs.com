@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: www
+spec:
+  template:
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: www
+          volumeMounts:
+            - name: service-cert
+              mountPath: "/app/secrets"
+          env:
+            - name: NODE_ENV
+              value: development
+      volumes:
+        - name: service-cert
+          secret:
+            secretName: service-cert
