@@ -3,6 +3,8 @@ import ColorScheme from 'color-scheme'
 
 // Based on "SAKURA BLOSSOM" by natalieyeye (https://editor.p5js.org/natalieyeye/sketches/ceBrnMFZr)
 
+const HEIGHT = 1000
+
 const Sketch = dynamic(() => import('react-p5').then(mod => mod.default), {
   ssr: false,
 })
@@ -18,7 +20,7 @@ const organics = []
 let change, colorsPalette
 
 function windowResized(p5) {
-  p5.resizeCanvas(p5.windowWidth, p5.windowHeight)
+  p5.resizeCanvas(p5.windowWidth, HEIGHT)
   for (let i = 0; i < organics.length; i++) {
     organics[i].xpos = p5.windowWidth / 2
   }
@@ -29,7 +31,7 @@ function getRandomArbitrary(min, max) {
 }
 
 function setup(p5, canvasParentRef) {
-  p5.createCanvas(p5.windowWidth, p5.windowHeight).parent(canvasParentRef)
+  p5.createCanvas(p5.windowWidth, HEIGHT).parent(canvasParentRef)
 
   const colorScheme = new ColorScheme()
   const colors = colorScheme.scheme('triade').variation('light').distance(0.75).colors()

@@ -29,13 +29,13 @@ export default function Home() {
             marginTop: 190,
           }}
         >
-          <div style={{}}>
+          <div style={{ marginBottom: '2rem' }}>
             <Image
               src={avatar}
               title="A picture of the author, Seandon!"
               alt="A picture of the author, Seandon!"
-              height={150}
-              width={150}
+              height={120}
+              width={120}
               style={{ borderRadius: '100px' }}
             />
           </div>
