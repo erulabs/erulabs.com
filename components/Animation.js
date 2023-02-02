@@ -37,19 +37,19 @@ function setup(p5, canvasParentRef) {
   const colors = colorScheme.scheme('triade').variation('light').add_complement(false).web_safe(true).colors()
 
   colorsPalette = colors.map(c => {
-    return p5.color(...hexToRgb(c), getRandomArbitrary(20, 100))
+    return p5.color(...hexToRgb(c), getRandomArbitrary(30, 80))
   })
 
   change = 0
 
-  for (let i = 0; i < 110; i++) {
+  for (let i = 0; i < 75; i++) {
     organics.push(
       new Organic({
         p5,
-        radius: getRandomArbitrary(0, 5) + 0.1 + 1 * i,
+        radius: getRandomArbitrary(5, 15) + 1 * (i * 3),
         xpos: p5.windowWidth / 2,
         ypos: 250,
-        roughness: i * 10,
+        roughness: i * getRandomArbitrary(7, 13),
         angle: i * p5.random(90),
         color: colorsPalette[p5.floor(p5.random(8))],
       })

@@ -37,8 +37,8 @@ export default function Home() {
               src={avatar}
               title="A picture of the author, Seandon!"
               alt="A picture of the author, Seandon!"
-              height={120}
-              width={120}
+              height={110}
+              width={110}
               style={{ borderRadius: '100px' }}
             />
           </div>
