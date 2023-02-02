@@ -34,10 +34,10 @@ function setup(p5, canvasParentRef) {
   p5.createCanvas(p5.windowWidth, HEIGHT).parent(canvasParentRef)
 
   const colorScheme = new ColorScheme()
-  const colors = colorScheme.scheme('triade').variation('light').distance(0.75).colors()
+  const colors = colorScheme.scheme('triade').variation('light').add_complement(false).web_safe(true).colors()
 
   colorsPalette = colors.map(c => {
-    return p5.color(...hexToRgb(c), getRandomArbitrary(10, 40))
+    return p5.color(...hexToRgb(c), getRandomArbitrary(20, 100))
   })
 
   change = 0
@@ -81,6 +81,8 @@ function Organic({ p5, radius, xpos, ypos, roughness, angle, color }) {
     this.useStroke = true
   }
 
+  this.scale = 0.1
+
   this.show = function (change) {
     if (this.useStroke) {
       p5.strokeWeight(0.4) // We can use this to set thickness of the stroke if necessary
@@ -95,6 +97,10 @@ function Organic({ p5, radius, xpos, ypos, roughness, angle, color }) {
     p5.translate(this.xpos, this.ypos) // move to xpos, ypos
     p5.rotate(this.angle + change) // rotate by this.angle+change
     p5.beginShape() // begin a shape based on the vertex points below
+
+    this.scale = this.scale + 0.005
+    if (this.scale > 1) this.scale = 1
+    p5.scale(p5.sin(this.scale))
     // The lines below create our vertex points
     let off = 0
     for (let i = 0; i < p5.TWO_PI; i += 0.1) {
