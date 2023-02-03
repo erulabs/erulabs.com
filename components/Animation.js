@@ -32,6 +32,7 @@ function getRandomArbitrary(min, max) {
 
 function setup(p5, canvasParentRef) {
   p5.createCanvas(p5.windowWidth, HEIGHT).parent(canvasParentRef)
+  p5.frameRate(30)
 
   const colorScheme = new ColorScheme()
   const colors = colorScheme.scheme('triade').variation('light').add_complement(false).web_safe(true).colors()
@@ -98,7 +99,7 @@ function Organic({ p5, radius, xpos, ypos, roughness, angle, color }) {
     p5.rotate(this.angle + change) // rotate by this.angle+change
     p5.beginShape() // begin a shape based on the vertex points below
 
-    this.scale = this.scale + 0.005
+    this.scale = this.scale + 0.01
     if (this.scale > 1) this.scale = 1
     p5.scale(p5.sin(this.scale))
     // The lines below create our vertex points
