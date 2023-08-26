@@ -6,13 +6,11 @@ metadata:
   labels:
     app: seandonmooy
   annotations:
-    cert-manager.io/cluster-issuer: kubesail-letsencrypt
     kubernetes.io/ingress.class: caddy
 spec:
   tls:
     - hosts:
         - seandonmooy.com
-      secretName: seandonmooy
   rules:
     - host: seandonmooy.com
       http:
@@ -22,4 +20,4 @@ spec:
               service:
                 name: www
                 port:
-                  name: http-ports
+                  number: 8080
