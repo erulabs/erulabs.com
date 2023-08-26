@@ -75,4 +75,4 @@ COPY --from=production-build --chown=node:node /app/.next/standalone ./
 COPY --from=production-build --chown=node:node /app/.next/static ./.next/static
 EXPOSE 3003
 VOLUME ["/app/secrets"]
-CMD ["node", ".next/standalone/server.js"]
+CMD ["node", "server.js"]
