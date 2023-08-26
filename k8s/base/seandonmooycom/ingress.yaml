@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: seandonmooycom
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: seandonmooycom
+              servicePort: '3003'
+      host: seandonmooy.com
+  tls:
+    - hosts:
+        - seandonmooy.com
+      secretName: seandonmooycom
+

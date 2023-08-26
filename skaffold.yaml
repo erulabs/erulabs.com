@@ -1,0 +1,37 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+build:
+  artifacts:
+    - image: erulabs/seandonmooy
+      context: .
+      sync:
+        manual:
+          - src: '**/*'
+            dest: .
+      docker:
+        target: dev
+deploy:
+  kustomize:
+    paths:
+      - k8s/dev
+portForward:
+  - resourceType: Service
+    resourceName: www
+    port: 3003
+    address: 0.0.0.0
+    localPort: 3003
+profiles:
+  - name: prod
+    build:
+      artifacts:
+        - image: erulabs/seandonmooy
+          context: .
+          platforms: ['linux/amd64']
+          docker:
+            target: production
+      local:
+        push: true
+    deploy:
+      kustomize:
+        paths:
+          - k8s/prod

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seandonmooycom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seandonmooycom
+  template:
+    metadata:
+      labels:
+        app: seandonmooycom
+    spec:
+      containers:
+        - name: seandonmooycom
+          image: erulabs/seandonmooycom
+          ports:
+            - containerPort: '3003'
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          command: yarn start
+

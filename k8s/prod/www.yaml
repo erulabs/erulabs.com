@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: www
+spec:
+  template:
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: www
+          command: ['node', 'https-server.js']
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: NEXT_HOSTNAME
+              value: seandonmooy.com

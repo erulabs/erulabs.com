@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Rubik_Mono_One } from '@next/font/google'
-import Animation from '@/components/Animation'
+import Animation from '../components/Animation'
 import avatar from '../public/avatar.jpg'
 
 const rubikMono = Rubik_Mono_One({ subsets: ['latin'], weight: '400' })
