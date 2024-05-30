@@ -27,7 +27,8 @@ spec:
           imagePullPolicy: IfNotPresent
           terminationMessagePolicy: FallbackToLogsOnError
           ports:
-            - containerPort: 3003
+            - name: http
+              containerPort: 3003
             - name: metrics
               containerPort: 5000
           env:
@@ -46,6 +47,6 @@ spec:
   ports:
     - port: 3003
       protocol: TCP
-      targetPort: 8080
+      targetPort: 3003
   selector:
     app: www

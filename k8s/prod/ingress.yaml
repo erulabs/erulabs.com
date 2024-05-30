@@ -3,14 +3,16 @@ kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
   name: seandonmooy
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
   labels:
     app: seandonmooy
-  annotations:
-    kubernetes.io/ingress.class: caddy
 spec:
+  ingressClassName: haproxy
   tls:
     - hosts:
         - seandonmooy.com
+      secretName: seandonmooy-cert
   rules:
     - host: seandonmooy.com
       http:
@@ -20,4 +22,4 @@ spec:
               service:
                 name: www
                 port:
-                  number: 8080
+                  number: 3003
