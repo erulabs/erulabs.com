@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.3
+# syntax=docker/dockerfile:1
 
 FROM node:20-bullseye-slim AS base-version
 
@@ -9,13 +9,15 @@ FROM base-version AS build-deps
 FROM build-deps AS dev-deps
 WORKDIR /app
 COPY package.json yarn.lock .npmr[c] ./
-ENV NODE_ENV=development
+ENV NODE_ENV=development \
+  YARN_CACHE_FOLDER=/home/node/.cache
 RUN yarn install --frozen-lockfile
 
 FROM build-deps AS prod-deps
 WORKDIR /app
 COPY package.json yarn.lock .npmr[c] ./
-ENV NODE_ENV=production
+ENV NODE_ENV=production \
+  YARN_CACHE_FOLDER=/home/node/.cache
 RUN yarn install --frozen-lockfile
 
 # Install dependencies only when needed
@@ -43,7 +45,7 @@ RUN NODE_ENV=development ./node_modules/.bin/next build
 COPY --chown=node:node scripts ./scripts
 CMD ["yarn", "dev"]
 
-FROM base as production-build
+FROM base AS production-build
 WORKDIR /app
 ENV NODE_ENV=production \
   NEXT_TELEMETRY_DISABLED="1"
@@ -61,7 +63,7 @@ USER node
 ENV NODE_ENV=production \
   NEXT_TELEMETRY_DISABLED="1" \
   HOST="0.0.0.0" \
-	PORT=3003 \
+  PORT=3003 \
   TZ=UTC
 COPY --chown=node:node --from=prod-deps /app/node_modules ./node_modules
 COPY --chown=node:node .env.loca[l] *rc *.js *.json *.yaml *.md *.lock ./
