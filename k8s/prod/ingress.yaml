@@ -13,6 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/http2-push-preload: "true"
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - seandonmooy.com

@@ -1,11 +1,11 @@
 # syntax=docker/dockerfile:1.3
 # Install dependencies only when needed
-FROM node:16-bullseye-slim AS deps
+FROM node:20-bullseye-slim AS deps
 WORKDIR /app
-COPY package.json yarn.lock .npmrc ./
+COPY package.json yarn.lock .npmr[c] ./
 RUN yarn install --frozen-lockfile
 
-FROM node:16-bullseye-slim AS builder
+FROM node:20-bullseye-slim AS builder
 WORKDIR /app
 ARG BUILD_ASSET_PREFIX
 RUN apt-get update -yqq && \
@@ -32,7 +32,7 @@ ENV NEXT_TELEMETRY_DISABLED="1" \
   HTTPS=true
 CMD ["yarn", "dev"]
 
-FROM node:16-bullseye-slim AS runner
+FROM node:20-bullseye-slim AS runner
 WORKDIR /app
 ARG BUILD_ASSET_PREFIX
 ENV NODE_ENV="production" \
