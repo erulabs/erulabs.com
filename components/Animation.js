@@ -118,7 +118,7 @@ function Organic({ p5, radius, xpos, ypos, roughness, angle, color }) {
 }
 
 const Animation = () => {
-  return <Sketch setup={setup} draw={draw} windowResized={windowResized} />
+  return <Sketch id="animation" setup={setup} draw={draw} windowResized={windowResized} />
 }
 
 export default Animation
