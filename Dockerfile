@@ -41,7 +41,7 @@ COPY --chown=node:node pages ./pages
 COPY --chown=node:node styles ./styles
 COPY --chown=node:node components ./components
 COPY --chown=node:node .env.loca[l] *r[c] *.j[s] *.jso[n] *.yam[l] *.m[d] *.loc[k] ./
-RUN NODE_ENV=development ./node_modules/.bin/next build
+RUN NODE_ENV=development yarn build
 COPY --chown=node:node scripts ./scripts
 CMD ["yarn", "dev"]
 
@@ -55,7 +55,7 @@ COPY --chown=node:node public ./public
 COPY --chown=node:node pages ./pages
 COPY --chown=node:node styles ./styles
 COPY --chown=node:node components ./components
-RUN NODE_ENV=production ./node_modules/.bin/next build
+RUN NODE_ENV=production yarn build
 
 FROM base AS production
 WORKDIR /app
@@ -66,8 +66,7 @@ ENV NODE_ENV=production \
   PORT=3003 \
   TZ=UTC
 COPY --chown=node:node --from=prod-deps /app/node_modules ./node_modules
-COPY --chown=node:node .env.loca[l] *rc *.js *.json *.yaml *.md *.lock ./
-COPY --chown=node:node next.config.js ./
+COPY --chown=node:node .env.loca[l] *rc *.js *.json *.yaml *.md *.lock *.mjs ./
 COPY --chown=node:node public ./public
 COPY --chown=node:node scripts ./scripts
 COPY --chown=node:node styles ./styles
