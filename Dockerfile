@@ -1,79 +1,71 @@
 # syntax=docker/dockerfile:1
 
-FROM node:20-bullseye-slim AS base-version
+FROM node:24-bullseye-slim AS node-version
+ARG CACHEBUST
 
-FROM base-version AS build-deps
-# RUN apt-get update -yqq && apt-get install -yqq build-essential python3 make g++ dpkg curl bash git
-
-# Install dependencies only when needed
-FROM build-deps AS dev-deps
+FROM node-version AS deps
 WORKDIR /app
-COPY package.json yarn.lock .npmr[c] ./
+ENV YARN_CACHE_FOLDER=/home/node/.cache
+COPY ./.yarn/releases/*.cjs /app/.yarn/releases/
+COPY package.json yarn.lock .yarnrc.yml .npmr[c] ./
+RUN --mount=type=cache,mode=0777,target=/home/node/.cache,uid=1000 \
+  corepack enable && \
+  corepack prepare && \
+  yarn --immutable && \
+  yarn next telemetry disable
+
+
+FROM node-version AS builder
+WORKDIR /app
+
+ARG NODE_ENV=production
+ARG NEXT_PUBLIC_APP_BUILD_ID
+ARG NEXT_PUBLIC_APP_ENV
+ARG NEXT_PUBLIC_API_TARGET
+ARG NEXT_PUBLIC_WSS_TARGET
+ARG NEXT_PUBLIC_USE_RELATIVE_API_TARGET
+ARG NEXT_PUBLIC_STATIC_ASSET_PATH
+
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    NODE_ENV=production \
+    NODE_ENV=$NODE_ENV \
+    NEXT_PUBLIC_APP_BUILD_ID=$NEXT_PUBLIC_APP_BUILD_ID \
+    NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV \
+    NEXT_PUBLIC_API_TARGET=$NEXT_PUBLIC_API_TARGET \
+    NEXT_PUBLIC_WSS_TARGET=$NEXT_PUBLIC_WSS_TARGET \
+    NEXT_PUBLIC_USE_RELATIVE_API_TARGET=$NEXT_PUBLIC_USE_RELATIVE_API_TARGET \
+    NEXT_PUBLIC_STATIC_ASSET_PATH=$NEXT_PUBLIC_STATIC_ASSET_PATH
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY --chown=node:node . .
+RUN --mount=type=cache,mode=0777,target=/app/.next/cache,uid=1000 \
+  echo "NEXT_PUBLIC_APP_ENV: $NEXT_PUBLIC_APP_ENV" && \
+  echo "NEXT_PUBLIC_API_TARGET: $NEXT_PUBLIC_API_TARGET" && \
+  echo "NEXT_PUBLIC_API_TARGET exists:  $(if [ -n "$NEXT_PUBLIC_API_TARGET" ]; then echo "yes"; else echo "no"; fi)" && \
+  echo "NEXT_PUBLIC_WSS_TARGET: $NEXT_PUBLIC_WSS_TARGET" && \
+  echo "NEXT_PUBLIC_USE_RELATIVE_API_TARGET: $NEXT_PUBLIC_USE_RELATIVE_API_TARGET" && \
+  echo "NEXT_PUBLIC_APP_BUILD_ID: $NEXT_PUBLIC_APP_BUILD_ID" && \
+  echo "NEXT_PUBLIC_STATIC_ASSET_PATH: $NEXT_PUBLIC_STATIC_ASSET_PATH" && \
+  corepack enable && \
+  corepack prepare && \
+  yarn build && \
+  echo "VERSION: $NEXT_PUBLIC_APP_BUILD_ID" > /app/.next/static/version.txt
+
+
+FROM deps AS dev
 ENV NODE_ENV=development \
-  YARN_CACHE_FOLDER=/home/node/.cache
-RUN yarn install --frozen-lockfile
+    NEXT_TELEMETRY_DISABLED=1
+EXPOSE 3000
+COPY --chown=node:node . .
+ENTRYPOINT [ "yarn", "dev" ]
 
-FROM build-deps AS prod-deps
+
+FROM node-version AS runner
 WORKDIR /app
-COPY package.json yarn.lock .npmr[c] ./
-ENV NODE_ENV=production \
-  YARN_CACHE_FOLDER=/home/node/.cache
-RUN yarn install --frozen-lockfile
-
-# Install dependencies only when needed
-FROM base-version AS base
-WORKDIR /app
-RUN apt-get update -yqq && \
-  apt-get install -yqq bash curl && \
-  mkdir -p /app/secrets && \
-  chown -R node:node /app
-
-FROM base AS dev
+ENV NODE_ENV=production
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=node:node /app/.next/standalone ./
+COPY --from=builder --chown=node:node /app/.next/static ./.next/static
 USER node
-ENV NEXT_TELEMETRY_DISABLED="1" \
-  NODE_ENV=development \
-  HOST="0.0.0.0" \
-  HTTPS=true \
-  TZ=UTC
-COPY --chown=node:node --from=dev-deps /app/node_modules ./node_modules
-COPY --chown=node:node public ./public
-COPY --chown=node:node pages ./pages
-COPY --chown=node:node styles ./styles
-COPY --chown=node:node components ./components
-COPY --chown=node:node .env.loca[l] *r[c] *.j[s] *.jso[n] *.yam[l] *.m[d] *.loc[k] ./
-RUN NODE_ENV=development yarn build
-COPY --chown=node:node scripts ./scripts
-CMD ["yarn", "dev"]
-
-FROM base AS production-build
-WORKDIR /app
-ENV NODE_ENV=production \
-  NEXT_TELEMETRY_DISABLED="1"
-COPY --chown=node:node --from=dev-deps /app/node_modules ./node_modules
-COPY --chown=node:node .env.loca[l] *rc *.js *.json *.yaml *.md *.lock ./
-COPY --chown=node:node public ./public
-COPY --chown=node:node pages ./pages
-COPY --chown=node:node styles ./styles
-COPY --chown=node:node components ./components
-RUN NODE_ENV=production yarn build
-
-FROM base AS production
-WORKDIR /app
-USER node
-ENV NODE_ENV=production \
-  NEXT_TELEMETRY_DISABLED="1" \
-  HOST="0.0.0.0" \
-  PORT=3003 \
-  TZ=UTC
-COPY --chown=node:node --from=prod-deps /app/node_modules ./node_modules
-COPY --chown=node:node .env.loca[l] *rc *.js *.json *.yaml *.md *.lock *.mjs ./
-COPY --chown=node:node public ./public
-COPY --chown=node:node scripts ./scripts
-COPY --chown=node:node styles ./styles
-COPY --chown=node:node pages ./pages
-COPY --chown=node:node components ./components
-COPY --from=production-build --chown=node:node /app/.next/standalone ./
-COPY --from=production-build --chown=node:node /app/.next/static ./.next/static
-EXPOSE 3003
-VOLUME ["/app/secrets"]
+EXPOSE 3000
 CMD ["node", "server.js"]

@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import ColorScheme from 'color-scheme'
+import React from 'react'
 
 // Based on "SAKURA BLOSSOM" by natalieyeye (https://editor.p5js.org/natalieyeye/sketches/ceBrnMFZr)
 
@@ -118,6 +119,14 @@ function Organic({ p5, radius, xpos, ypos, roughness, angle, color }) {
 }
 
 const Animation = () => {
+  React.useEffect(() => {
+    // Cleanup function to remove any existing canvas when component unmounts
+    return () => {
+      const canvases = document.querySelectorAll('#animation canvas')
+      canvases.forEach(canvas => canvas.remove())
+    }
+  }, [])
+
   return <Sketch id="animation" setup={setup} draw={draw} windowResized={windowResized} />
 }
 

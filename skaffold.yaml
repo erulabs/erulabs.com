@@ -17,9 +17,9 @@ deploy:
 portForward:
   - resourceType: Service
     resourceName: www
-    port: 3003
+    port: 3000
     address: 0.0.0.0
-    localPort: 3003
+    localPort: 3000
 profiles:
   - name: prod
     build:

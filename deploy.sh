@@ -1,3 +1,4 @@
+#!/bin/bash
 
 VERSION=$(git rev-parse HEAD)
 

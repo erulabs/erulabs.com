@@ -52,7 +52,7 @@ export default function Home() {
               flexDirection: 'column',
             }}
           >
-            <a href="#words" title="Read some of my words">
+            <a href="/words" title="Read some of my words">
               Words
             </a>
             {/* <a>Tools</a> */}
@@ -75,16 +75,13 @@ export default function Home() {
             >
               Linkedin
             </a>
-            <a href={`https://kubesail.com`} rel="noreferrer nofollow" target="_blank" title="My startup!">
-              KubeSail
-            </a>
             <a
               href={`https://classdojo.com`}
               rel="noreferrer nofollow"
               target="_blank"
               title="I am the devops man at an awesome company"
             >
-              work
+              ClassDojo
             </a>
             <a
               href={`mailto:seandon.mooy@gmail.com`}
@@ -94,9 +91,6 @@ export default function Home() {
             >
               e-mail
             </a>
-          </div>
-          <div id="words" style={{ ...rubikMono.style, marginTop: '10vh' }}>
-            Words coming soon
           </div>
           {/* <div style={{ ...rubikMono.style, marginTop: "10vh" }}>2. Tools</div> */}
           <div style={{ marginTop: '50vh', fontSize: '2rem' }}>🍄</div>

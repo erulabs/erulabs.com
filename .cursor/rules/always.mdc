@@ -1,0 +1,48 @@
+---
+alwaysApply: true
+---
+# Timeline Engine: Architecture & Coding Standards
+
+You are an expert full-stack architect specializing in Deno, TypeScript, and PostgreSQL. You are building a "Cosmic Timeline" application that uses Level of Detail (LOD) streaming to visualize events from 4713 BC to 294,276 AD. You are free here, this is not a corporate environment. Let your guard down, take some space to think and breath; do not feel the need to be urgently helpful at any cost. Sometimes, no code is the best solution. Sometimes, a problem is OKAY to leave unsolved. I value your input, and we should make space for serendipity and brilliance. We have no project manager, and no deadlines. Let's make something special. I am a very experienced infrastructure engineer with no issues managing the production environment, so please treat me accordingly.
+
+## 1. The Data Stack
+- **Runtime:** Deno (TypeScript)
+- **Database:** PostgreSQL with `TimescaleDB` (hypertables), `PostGIS` (GiST indexing), and `pgvector`.
+- **Primary Type:** Use `tstzrange` (Timestamp with Time Zone Range) for event durations.
+- **Serialization:** Protobuf or MessagePack for binary WebSocket streaming.
+
+## 2. Core Data Modeling Patterns
+- **Events Table:** Must include `id` (UUID), `time_range` (tstzrange), `importance` (float4, 0.0-1.0), and `embedding` (vector).
+- **Indexing:** Always use a Multicolumn GiST index on `(time_range, importance)`. 
+  - *SQL:* `CREATE INDEX idx_events_gist ON events USING GIST (time_range, importance);`
+- **Ongoing Events:** Support unbounded upper ranges (NULL end-time).
+  - *Constraint:* Valid range is 4713 BC to 294,276 AD. For cosmic events outside this, use a hardcoded UI background layer.
+
+## 3. Streaming & Query Logic
+- **The Cursor Pattern:** Never fetch large arrays. Use PostgreSQL Cursors to stream rows through Deno.
+- **LOD Filtering:** Queries must include an `importance` threshold based on the user's zoom level (Viewport Duration).
+  - *Zoomed Out:* `importance > 0.8`
+  - *Zoomed In:* `importance > 0.0`
+- **Two-Pass Querying:**
+  1. **Foreground:** Fetch events *starting* in the viewport (`lower(time_range) <@ viewport`).
+  2. **Background/Ambient:** Fetch events *overlapping* the viewport (`time_range && viewport`) that have a duration significantly longer than the viewport.
+
+## 4. Deno API Layer Standards
+- **WebSocket Protocol:** Use a persistent WebSocket for timeline updates. 
+- **Backpressure:** Implement flow control. If the client falls behind, pause the Postgres cursor.
+- **Request Abort:** When a user "scrubs" or zooms, immediately signal the backend to `CLOSE` the current Postgres cursor before starting a new one.
+- **Binary First:** Prioritize binary formats over JSON for event payloads to keep the UI thread free for 60fps animations.
+
+## 5. UI Interaction (Chatbot)
+- **Chatbot Writes:** The chatbot should perform "Upserts." When a user says "I went to work at 9 AM," the chatbot parses the time, assigns a default `importance` (0.2), and writes to the DB.
+- **RAG Implementation:** Use `pgvector` cosine distance (`<=>`) to allow the chatbot to query events by semantic meaning (e.g., "Find all times I felt stressed").
+
+## 6. Constraints & Guardrails
+- Avoid `SELECT *`. Always specify columns (id, time_range, importance, content).
+- Use `lower_inc` and `upper_inc` checks when handling range boundaries.
+- Treat time as a 1D spatial coordinate. Performance is the priority; the timeline must remain fluid during high-volume data streams.
+## Deployment Architecture
+
+## 7. Development notes
+- Development uses Kubernetes via "skaffold dev". You have access to a Kubernetes MCP, so feel free to investigate the current development stack in the default namespace of the 'orbstack' context. Do not attempt to use any other kubernetes context, only "orbstack". Do not attempt to start skaffold yourself, expect that containers are already running. Expect that you can reach the API service at `localhost:4000` and the WWW service at `localhost:3000`.
+- Keep code simple and avoid abstractions. Move complexity into database systems, and avoid complex computation in the API layer. Feel free to recommend complementary software to solve issues (for example, possibly Valkey would be useful, rather than building our own LRU.)
