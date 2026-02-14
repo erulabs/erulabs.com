@@ -1,12 +1,31 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Rubik_Mono_One } from 'next/font/google'
-import Animation from '../components/Animation'
-import avatar from '../public/avatar.jpg'
+import Link from 'next/link'
+import { Lato, Spectral } from 'next/font/google'
+import SiteHeader from '../components/SiteHeader'
+import { getSortedPostsData } from '../lib/posts'
 
-const rubikMono = Rubik_Mono_One({ subsets: ['latin'], weight: '400' })
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  display: 'swap',
+})
 
-export default function Home() {
+const spectral = Spectral({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  display: 'swap',
+})
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData,
+    },
+  }
+}
+
+export default function Home({ allPostsData }) {
   return (
     <>
       <Head>
@@ -19,81 +38,75 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div style={{ position: 'absolute', top: 0, left: 0 }}>
-          <Animation />
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            textAlign: 'center',
-            marginTop: 190,
-          }}
-        >
-          <div style={{ marginBottom: '2rem' }}>
-            <Image
-              src={avatar}
-              title="A picture of the author, Seandon!"
-              alt="A picture of the author, Seandon!"
-              height={110}
-              width={110}
-              style={{ borderRadius: '100px' }}
-            />
-          </div>
+        <SiteHeader />
+
+        {/* Main content - pushed down to make room for hero */}
+        <div style={{ paddingTop: 450, overflowX: 'hidden', backgroundColor: '#fff', minHeight: '150vh' }}>
           <div
+            className={lato.className}
             style={{
-              ...rubikMono.style,
-              display: 'flex',
-              justifyContent: 'space-between',
-              maxWidth: '600px',
+              maxWidth: 650,
               margin: '0 auto',
-              flexDirection: 'column',
+              padding: '2rem',
+              color: '#111',
+              lineHeight: 1.8,
+              fontSize: '1.1rem',
             }}
           >
-            <a href="/words" title="Read some of my words">
-              Words
-            </a>
-            {/* <a>Tools</a> */}
-            <a
-              href={`https://github.com/erulabs`}
-              rel="noreferrer nofollow"
-              target="_blank"
-              title="Checkout some of my code"
+            <h1
+              style={{
+                textAlign: 'center',
+                fontSize: '2rem',
+                fontWeight: 700,
+                marginBottom: '3rem',
+                letterSpacing: '-0.02em',
+              }}
             >
-              Github
-            </a>
-            <a href={`https://twitter.com/erulabs`} rel="noreferrer nofollow" target="_blank" title="I do the bird-app">
-              Tweeter
-            </a>
-            <a
-              href={`https://www.linkedin.com/in/seandonmooy/`}
-              rel="noreferrer nofollow"
-              target="_blank"
-              title="super srs now"
-            >
-              Linkedin
-            </a>
-            <a
-              href={`https://classdojo.com`}
-              rel="noreferrer nofollow"
-              target="_blank"
-              title="I am the devops man at an awesome company"
-            >
-              ClassDojo
-            </a>
-            <a
-              href={`mailto:seandon.mooy@gmail.com`}
-              rel="noreferrer nofollow"
-              target="_blank"
-              title="Send an email to Seandon"
-            >
-              e-mail
-            </a>
+              Posts
+            </h1>
+            <ul style={{ listStyle: 'none', padding: 0 }}>
+              {allPostsData.map(({ slug, title, formattedDate, description }) => (
+                <li
+                  key={slug}
+                  style={{
+                    marginBottom: '2.5rem',
+                    paddingBottom: '2.5rem',
+                    borderBottom: '1px solid #eee',
+                  }}
+                >
+                  <Link href={`/posts/${slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    {formattedDate && (
+                      <time
+                        style={{
+                          display: 'block',
+                          color: '#aaa',
+                          fontSize: '0.6rem',
+                          textAlign: 'right',
+                          marginBottom: '-0.75rem',
+                        }}
+                      >
+                        {formattedDate}
+                      </time>
+                    )}
+                    <h2
+                      style={{
+                        fontSize: '1.4rem',
+                        fontWeight: 700,
+                        letterSpacing: '-0.01em',
+                      }}
+                    >
+                      {title}
+                    </h2>
+                    {description && (
+                      <p style={{ color: '#444', margin: 0 }} className={spectral.className}>
+                        {description}
+                      </p>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          {/* <div style={{ ...rubikMono.style, marginTop: "10vh" }}>2. Tools</div> */}
-          <div style={{ marginTop: '50vh', fontSize: '2rem' }}>🍄</div>
         </div>
       </main>
     </>
