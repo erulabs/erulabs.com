@@ -255,11 +255,9 @@ export function setAnimationParams(centerX, centerY, scale) {
 }
 
 const Animation = ({ centerX, centerY, scale = 1, seed = null, isStatic = false }) => {
-  // Set seed and static mode synchronously so they're available when setup runs
-  React.useMemo(() => {
-    providedSeed = seed
-    isStaticMode = isStatic
-  }, [seed, isStatic])
+  // Set module-level vars synchronously before setup runs on mount
+  providedSeed = seed
+  isStaticMode = isStatic
 
   React.useEffect(() => {
     targetCenterX = centerX
@@ -274,7 +272,8 @@ const Animation = ({ centerX, centerY, scale = 1, seed = null, isStatic = false 
     }
   }, [])
 
-  return <Sketch id="animation" setup={setup} draw={draw} windowResized={windowResized} />
+  // key forces a full remount (and therefore a new setup() call) whenever the seed changes
+  return <Sketch key={seed ?? 'default'} id="animation" setup={setup} draw={draw} windowResized={windowResized} />
 }
 
 export default Animation

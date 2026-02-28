@@ -99,7 +99,7 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
           top: headerOffset,
           left: 0,
           width: '100%',
-          zIndex: 0,
+          zIndex: -1,
           pointerEvents: 'none',
         }}
       >
@@ -123,8 +123,11 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
         }}
       >
         {/* Profile photo */}
-        <Link
-          href="/"
+        <div
+          onClick={e => {
+            e.preventDefault()
+            setFlowerSeed(Math.floor(Math.random() * 1_000_000))
+          }}
           style={{
             position: 'absolute',
             left: bloomCenterX,
@@ -134,11 +137,12 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
             transition: isPositioned
               ? `opacity 2s ease-out, left 0.3s ease-out, top 0.3s ease-out, transform 0.3s ease-out`
               : 'none',
+            cursor: 'pointer',
           }}
         >
           <Image
             src={avatar}
-            title="My FACEEE MY BEAUTIFUL FACEEE"
+            title="Well, hello!"
             alt="A picture of the author, Seandon!"
             height={photoSize}
             width={photoSize}
@@ -147,7 +151,7 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
               transition: isPositioned ? 'all 0.3s ease' : 'none',
             }}
           />
-        </Link>
+        </div>
 
         {/* Social icons */}
         <div

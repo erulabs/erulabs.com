@@ -55,14 +55,10 @@ function Job({ title, company, dateRange, location, children }) {
     <div style={{ marginBottom: '1.75rem' }}>
       <div style={{ fontWeight: 700, fontSize: '1rem' }}>{title}</div>
       <div style={{ fontSize: '0.95rem', marginBottom: '0.2rem' }}>{company}</div>
-      <div
-        style={{
-          fontSize: '0.72rem',
-          color: ACCENT,
-          marginBottom: '0.6rem',
-        }}
-      >
-        {dateRange}&nbsp;&nbsp;·&nbsp;&nbsp;{location}
+      <div className="job-meta" style={{ fontSize: '0.72rem', color: ACCENT, marginBottom: '0.6rem' }}>
+        <span className="job-date">{dateRange}</span>
+        <span className="job-sep">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span className="job-location">{location}</span>
       </div>
       <p style={{ fontSize: '0.88rem', color: '#333', lineHeight: 1.65, margin: 0 }}>{children}</p>
     </div>
@@ -82,7 +78,7 @@ export default function Resume() {
       <main>
         <SiteHeader alwaysCollapsed staticFlower />
 
-        <div className="resume-wrapper" style={{ paddingTop: 100, backgroundColor: '#fff', minHeight: '100vh' }}>
+        <div className="resume-wrapper" style={{ paddingTop: 100, minHeight: '100vh' }}>
           <div
             className={`${lato.className} resume-content`}
             style={{
@@ -194,12 +190,37 @@ export default function Resume() {
                 <p style={{ fontSize: '0.8rem', color: ACCENT, fontStyle: 'italic', marginTop: '0.5rem' }}>
                   There&apos;s a lot more — ask me about what I did before TigerText!
                 </p>
+
+                {/* Social — mobile only, sits at the bottom of the content column */}
+                <div className="resume-social-mobile">
+                  <SectionLabel>Social</SectionLabel>
+                  <div style={{ fontSize: '0.82rem', color: '#444', lineHeight: 2.1 }}>
+                    <div>
+                      <a target="_blank" rel="noreferrer" href="https://twitter.com/erulabs">
+                        twitter.com/erulabs
+                      </a>
+                    </div>
+                    <div>
+                      <a target="_blank" rel="noreferrer" href="https://github.com/erulabs">
+                        github.com/erulabs
+                      </a>
+                    </div>
+                    <div>
+                      <a target="_blank" rel="noreferrer" href="https://linkedin.com/in/seandonmooy">
+                        linkedin.com/in/seandonmooy
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* ── Right column ── */}
-              <div style={{ textAlign: 'right' }}>
+              <div className="resume-right" style={{ textAlign: 'right' }}>
                 {/* Avatar */}
-                <div style={{ display: 'flex', justifyContent: 'right', marginBottom: '1.25rem' }}>
+                <div
+                  className="resume-avatar"
+                  style={{ display: 'flex', justifyContent: 'right', marginBottom: '1.25rem' }}
+                >
                   <Image
                     src={avatar}
                     alt="Seandon Mooy"
@@ -210,59 +231,60 @@ export default function Resume() {
                 </div>
 
                 {/* Contact */}
-                <div style={{ fontSize: '0.82rem', color: '#444', lineHeight: 2, textAlign: 'right' }}>
+                <div style={{ fontSize: '0.82rem', color: '#444', lineHeight: 2 }}>
                   <div>seandon.mooy@gmail.com</div>
                   <div>(805) 729-7655</div>
                   <div>Goleta, CA</div>
                 </div>
 
-                <RightSectionLabel>Industry Skills</RightSectionLabel>
-                <ul
-                  style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    fontSize: '0.82rem',
-                    color: '#444',
-                    lineHeight: 2.1,
-                  }}
-                >
-                  {[
-                    'Leadership',
-                    'Architecture',
-                    'Team Management',
-                    'Reliability Engineering',
-                    'Containerization',
-                    'Full-stack (html to datacenter)',
-                    'Hardware',
-                    'Business Operations',
-                  ].map(skill => (
-                    <li key={skill}>{skill}</li>
-                  ))}
-                </ul>
+                <div className="resume-hide-mobile">
+                  <RightSectionLabel>Strong Suit</RightSectionLabel>
+                  <ul
+                    style={{
+                      listStyle: 'none',
+                      padding: 0,
+                      margin: 0,
+                      fontSize: '0.82rem',
+                      color: '#444',
+                      lineHeight: 2.1,
+                    }}
+                  >
+                    {[
+                      'Architecture',
+                      'Reliability',
+                      'Platform Engineering',
+                      'Team Leadership',
+                      'Full-stack (html to datacenter)',
+                    ].map(skill => (
+                      <li key={skill}>{skill}</li>
+                    ))}
+                  </ul>
 
-                <RightSectionLabel>Tools &amp; Technologies</RightSectionLabel>
-                <p style={{ fontSize: '0.82rem', color: '#444', lineHeight: 1.8, margin: 0 }}>
-                  Linux, Bash, AWS, Kubernetes, Typescript, Node.js, Golang, Terraform, Chef, Redis, SQL, React, CDNs,
-                  OpenStack
-                </p>
+                  <RightSectionLabel>Tools &amp; Technologies</RightSectionLabel>
+                  <p style={{ fontSize: '0.82rem', color: '#444', lineHeight: 1.8, margin: 0 }}>
+                    Linux, Bash, AWS, Kubernetes, Typescript, Node.js, Golang, Terraform, Chef, Redis, SQL, React, CDNs,
+                    OpenStack
+                  </p>
+                </div>
 
-                <RightSectionLabel>Social</RightSectionLabel>
-                <div style={{ fontSize: '0.82rem', color: '#444', lineHeight: 2.1 }}>
-                  <div>
-                    <a target="_blank" rel="noreferrer" href="https://twitter.com/erulabs">
-                      twitter.com/erulabs
-                    </a>
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noreferrer" href="https://github.com/erulabs">
-                      github.com/erulabs
-                    </a>
-                  </div>
-                  <div>
-                    <a target="_blank" rel="noreferrer" href="https://linkedin.com/in/seandonmooy">
-                      linkedin.com/in/seandonmooy
-                    </a>
+                <div className="resume-social-desktop">
+                  <RightSectionLabel>Social</RightSectionLabel>
+                  <div style={{ fontSize: '0.82rem', color: '#444', lineHeight: 2.1 }}>
+                    <div>
+                      <a target="_blank" rel="noreferrer" href="https://twitter.com/erulabs">
+                        twitter.com/erulabs
+                      </a>
+                    </div>
+                    <div>
+                      <a target="_blank" rel="noreferrer" href="https://github.com/erulabs">
+                        github.com/erulabs
+                      </a>
+                    </div>
+                    <div>
+                      <a target="_blank" rel="noreferrer" href="https://linkedin.com/in/seandonmooy">
+                        linkedin.com/in/seandonmooy
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -272,6 +294,54 @@ export default function Resume() {
       </main>
 
       <style jsx global>{`
+        .resume-social-mobile {
+          display: none;
+        }
+
+        @media (max-width: 600px) {
+          .resume-wrapper {
+            padding-top: 70px !important;
+          }
+          .resume-content {
+            padding: 1.25rem 1rem 3rem !important;
+          }
+          .resume-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
+          }
+          .resume-right {
+            order: -1;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 1.25rem !important;
+            text-align: left !important;
+            margin-bottom: 1rem;
+          }
+          .resume-avatar {
+            flex-shrink: 0;
+            justify-content: flex-start !important;
+            margin-bottom: 0 !important;
+          }
+          .resume-hide-mobile {
+            display: none !important;
+          }
+          .resume-social-desktop {
+            display: none !important;
+          }
+          .resume-social-mobile {
+            display: block;
+          }
+          .job-sep {
+            display: none;
+          }
+          .job-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+          }
+        }
+
         @media print {
           canvas {
             display: none !important;

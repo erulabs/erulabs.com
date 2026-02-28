@@ -43,7 +43,7 @@ export default function Post({ postData }) {
         <SiteHeader alwaysCollapsed />
 
         {/* Main content - pushed down for collapsed header */}
-        <div style={{ paddingTop: 100, overflowX: 'hidden', backgroundColor: '#fff', minHeight: '100vh' }}>
+        <div style={{ paddingTop: 100, overflowX: 'hidden', minHeight: '100vh' }}>
           <article
             className={lato.className}
             style={{
@@ -80,7 +80,10 @@ export default function Post({ postData }) {
                 </time>
               )}
             </header>
-            <div className={`post-content ${spectral.className}`} dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+            <div
+              className={`post-content ${spectral.className}`}
+              dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
+            />
           </article>
         </div>
       </main>
