@@ -126,7 +126,11 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
         <div
           onClick={e => {
             e.preventDefault()
-            setFlowerSeed(Math.floor(Math.random() * 1_000_000))
+            if (alwaysCollapsed) {
+              window.location.href = '/'
+            } else {
+              setFlowerSeed(Math.floor(Math.random() * 1_000_000))
+            }
           }}
           style={{
             position: 'absolute',

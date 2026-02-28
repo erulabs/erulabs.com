@@ -122,6 +122,15 @@ export default function Resume() {
                   Founder &amp; Senior Platform Engineer
                 </h2>
 
+                {/* Contact strip — mobile only, sits right under the title */}
+                <div className="resume-contact-mobile">
+                  <span>seandon.mooy@gmail.com</span>
+                  <span className="resume-contact-sep">·</span>
+                  <span>(805) 729-7655</span>
+                  <span className="resume-contact-sep">·</span>
+                  <span>Goleta, CA</span>
+                </div>
+
                 <SectionLabel style={{ marginTop: '1.5rem' }}>About Me</SectionLabel>
                 <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: '#333', margin: 0 }}>
                   I am obsessed with technology and I write code every day. I cut my chops at a traditional ISP before
@@ -138,9 +147,9 @@ export default function Resume() {
                   dateRange="Nov 2022 – Present"
                   location="Remote from Santa Barbara, CA"
                 >
-                  Joined as first Platform engineer, built a platform team. Migrated entire infrastructure from Nomad to
-                  Kubernetes. Reduced downtime and increased deployment speed dramatically. Cut costs aggressively.
-                  Worked across teams to improve performance, cut costs, and drive velocity.
+                  Joined as first platform engineer, built a great team. Migrated entire infrastructure to AWS EKS.
+                  Reduced downtime and increased deployment speed dramatically. Cut costs aggressively. Worked across
+                  teams to improve performance and drive velocity.
                 </Job>
 
                 <Job
@@ -238,7 +247,7 @@ export default function Resume() {
                 </div>
 
                 <div className="resume-hide-mobile">
-                  <RightSectionLabel>Strong Suit</RightSectionLabel>
+                  <RightSectionLabel>Strong Suits</RightSectionLabel>
                   <ul
                     style={{
                       listStyle: 'none',
@@ -260,15 +269,15 @@ export default function Resume() {
                     ))}
                   </ul>
 
-                  <RightSectionLabel>Tools &amp; Technologies</RightSectionLabel>
+                  <RightSectionLabel>Tools I love</RightSectionLabel>
                   <p style={{ fontSize: '0.82rem', color: '#444', lineHeight: 1.8, margin: 0 }}>
-                    Linux, Bash, AWS, Kubernetes, Typescript, Node.js, Golang, Terraform, Chef, Redis, SQL, React, CDNs,
-                    OpenStack
+                    Linux, AWS, Kubernetes, Typescript, Node.js, Golang, Terraform, Chef, Redis, SQL, React, CDNs,
+                    Virtualization
                   </p>
                 </div>
 
                 <div className="resume-social-desktop">
-                  <RightSectionLabel>Social</RightSectionLabel>
+                  <RightSectionLabel>On the web</RightSectionLabel>
                   <div style={{ fontSize: '0.82rem', color: '#444', lineHeight: 2.1 }}>
                     <div>
                       <a target="_blank" rel="noreferrer" href="https://twitter.com/erulabs">
@@ -297,6 +306,9 @@ export default function Resume() {
         .resume-social-mobile {
           display: none;
         }
+        .resume-contact-mobile {
+          display: none;
+        }
 
         @media (max-width: 600px) {
           .resume-wrapper {
@@ -310,18 +322,7 @@ export default function Resume() {
             gap: 0 !important;
           }
           .resume-right {
-            order: -1;
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            gap: 1.25rem !important;
-            text-align: left !important;
-            margin-bottom: 1rem;
-          }
-          .resume-avatar {
-            flex-shrink: 0;
-            justify-content: flex-start !important;
-            margin-bottom: 0 !important;
+            display: none !important;
           }
           .resume-hide-mobile {
             display: none !important;
@@ -331,6 +332,19 @@ export default function Resume() {
           }
           .resume-social-mobile {
             display: block;
+          }
+          .resume-contact-mobile {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: #555;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+          }
+          .resume-contact-sep {
+            color: #bbb;
           }
           .job-sep {
             display: none;
