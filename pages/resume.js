@@ -184,7 +184,7 @@ export default function Resume() {
                 <Job
                   title="Senior DevOps Engineer"
                   company="TigerText"
-                  dateRange="Sept 2015 – Feb 2016"
+                  dateRange="Sept 2014 – Feb 2016"
                   location="Santa Monica, CA"
                 >
                   On-call for messaging systems used by large healthcare providers and hospitals. The product&apos;s
