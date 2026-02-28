@@ -60,12 +60,9 @@ COPY --chown=node:node . .
 ENTRYPOINT [ "yarn", "dev" ]
 
 
-FROM node-version AS runner
+FROM builder AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=node:node /app/.next/standalone ./
-COPY --from=builder --chown=node:node /app/.next/static ./.next/static
 USER node
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["yarn", "start"]
