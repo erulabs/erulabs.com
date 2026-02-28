@@ -23,6 +23,7 @@ let change, colorsPalette
 let isVisible = true
 let currentRotationSpeed = 0 // current speed (will decelerate over time)
 let hasReachedFullSize = false // track when bloom animation is complete
+let isStaticMode = false // when true, flower is instantly fully grown and non-rotating
 
 // Target position and scale for the bloom (updated via props)
 let targetCenterX = null // null means use default (center of screen)
@@ -140,6 +141,14 @@ function setup(p5, canvasParentRef) {
     )
   }
 
+  if (isStaticMode) {
+    currentRotationSpeed = 0
+    hasReachedFullSize = true
+    for (let i = 0; i < organics.length; i++) {
+      organics[i].growthScale = 1
+    }
+  }
+
   // Pause animation when tab is not visible
   document.addEventListener('visibilitychange', () => {
     isVisible = !document.hidden
@@ -245,11 +254,12 @@ export function setAnimationParams(centerX, centerY, scale) {
   targetScale = scale
 }
 
-const Animation = ({ centerX, centerY, scale = 1, seed = null }) => {
-  // Set seed synchronously so it's available when setup runs
+const Animation = ({ centerX, centerY, scale = 1, seed = null, isStatic = false }) => {
+  // Set seed and static mode synchronously so they're available when setup runs
   React.useMemo(() => {
     providedSeed = seed
-  }, [seed])
+    isStaticMode = isStatic
+  }, [seed, isStatic])
 
   React.useEffect(() => {
     targetCenterX = centerX

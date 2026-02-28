@@ -41,7 +41,7 @@ export default function Home({ allPostsData }) {
         <SiteHeader />
 
         {/* Main content - pushed down to make room for hero */}
-        <div style={{ paddingTop: 450, overflowX: 'hidden', backgroundColor: '#fff', minHeight: '150vh' }}>
+        {/* <div style={{ paddingTop: 450, overflowX: 'hidden', backgroundColor: '#fff', minHeight: '150vh' }}>
           <div
             className={lato.className}
             style={{
@@ -107,7 +107,7 @@ export default function Home({ allPostsData }) {
               ))}
             </ul>
           </div>
-        </div>
+        </div> */}
       </main>
     </>
   )

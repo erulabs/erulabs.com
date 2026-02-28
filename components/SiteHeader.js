@@ -3,10 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
+import { SiReaddotcv } from 'react-icons/si'
 import Animation from './Animation'
 import avatar from '../public/avatar.jpg'
 
-export default function SiteHeader({ alwaysCollapsed = false }) {
+export default function SiteHeader({ alwaysCollapsed = false, staticFlower = false }) {
   const [scrollProgress, setScrollProgress] = useState(alwaysCollapsed ? 1 : 0)
   const [headerOffset, setHeaderOffset] = useState(0)
   const [windowWidth, setWindowWidth] = useState(1200)
@@ -102,7 +103,13 @@ export default function SiteHeader({ alwaysCollapsed = false }) {
           pointerEvents: 'none',
         }}
       >
-        <Animation centerX={bloomCenterX} centerY={bloomCenterY} scale={animationScale} seed={flowerSeed} />
+        <Animation
+          centerX={bloomCenterX}
+          centerY={bloomCenterY}
+          scale={animationScale}
+          seed={flowerSeed}
+          isStatic={staticFlower}
+        />
       </div>
 
       {/* Header */}
@@ -210,6 +217,21 @@ export default function SiteHeader({ alwaysCollapsed = false }) {
               }}
             >
               <FaEnvelope />
+            </a>
+            <a
+              href="/resume"
+              rel="noreferrer nofollow"
+              target="_blank"
+              title="View my resume"
+              style={{
+                fontSize: `${iconSize}rem`,
+                display: 'flex',
+                alignItems: 'center',
+                height: mojoSize,
+                transition: 'font-size 0.3s ease',
+              }}
+            >
+              <SiReaddotcv />
             </a>
             <a
               href="https://www.linkedin.com/in/seandonmooy/"
