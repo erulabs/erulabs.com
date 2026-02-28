@@ -142,9 +142,9 @@ export default function Resume() {
                   dateRange="Nov 2022 – Present"
                   location="Remote from Santa Barbara, CA"
                 >
-                  Joined as first Platform engineer, built a platform team. Migrated from Nomad to Kubernetes. Reduced
-                  downtime and deployment speed dramatically. Cut costs aggressively. Worked across teams to improve
-                  performance, cut costs, and drive velocity.
+                  Joined as first Platform engineer, built a platform team. Migrated entire infrastructure from Nomad to
+                  Kubernetes. Reduced downtime and increased deployment speed dramatically. Cut costs aggressively.
+                  Worked across teams to improve performance, cut costs, and drive velocity.
                 </Job>
 
                 <Job
