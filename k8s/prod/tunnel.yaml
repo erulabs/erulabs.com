@@ -1,0 +1,33 @@
+apiVersion: networking.cfargotunnel.com/v1alpha2
+kind: Tunnel
+metadata:
+  name: seandonmooycom
+spec:
+  newTunnel:
+    name: seandonmooycom
+  cloudflare:
+    email: seandon.mooy@gmail.com
+    domain: seandonmooy.com
+    secret: cloudflare-secrets
+    accountId: 30b6f737e4cdf849778add0e621afd63
+---
+apiVersion: networking.cfargotunnel.com/v1alpha1
+kind: TunnelBinding
+metadata:
+  name: seandonmooycom
+subjects:
+  - kind: Service
+    name: seandonmooy
+    spec:
+      fqdn: seandonmooy.com
+      protocol: http
+      target: http://www.seandonmooy.svc.cluster.local:3000
+  - kind: Service
+    name: www
+    spec:
+      fqdn: www.seandonmooy.com
+      protocol: http
+      target: http://www.seandonmooy.svc.cluster.local:3000
+tunnelRef:
+  kind: Tunnel
+  name: seandonmooycom

@@ -73,6 +73,7 @@ export default function Resume() {
         <meta name="description" content="Resume of Seandon Mooy — Founder & Senior Platform Engineer" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="color-scheme" content="light" />
       </Head>
 
       <main>
@@ -133,10 +134,9 @@ export default function Resume() {
 
                 <SectionLabel style={{ marginTop: '1.5rem' }}>About Me</SectionLabel>
                 <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: '#333', margin: 0 }}>
-                  I am obsessed with technology and I write code every day. I cut my chops at a traditional ISP before
-                  silicon valley, so I&apos;ve seen everything from Cray to Cloud. A father, founder, and an amateur at
-                  all things; I love learning, but I pride myself on putting pragmatism before idealism. My guiding
-                  direction in life is to accrue maximum responsibility.
+                  My mission is to accumulate maximum responsibility. Father of 3, keys to the datacenter, admin of your
+                  Okta org, etc. Sysadmin with a smile for over 20 years. I pride myself on putting pragmatism before
+                  idealism, but sometimes trying something new is pragmatic, too.
                 </p>
 
                 <SectionLabel>Experience</SectionLabel>
@@ -147,15 +147,15 @@ export default function Resume() {
                   dateRange="Nov 2022 – Present"
                   location="Remote from Santa Barbara, CA"
                 >
-                  Joined as first platform engineer, built a great team. Migrated entire infrastructure to AWS EKS.
-                  Reduced downtime and increased deployment speed dramatically. Cut costs aggressively. Worked across
-                  teams to improve performance and drive velocity.
+                  Joined as first platform engineer, built a great team. Migrated infrastructure from bespoke to AWS
+                  EKS. Reduced downtime and increased deployment speed dramatically. Cut costs aggressively. Worked
+                  across teams to improve performance and drive velocity. Implemented an operational excellence program.
                 </Job>
 
                 <Job
                   title="Founder / CTO"
                   company="KubeSail"
-                  dateRange="July 2019 – Nov 2022"
+                  dateRange="Jul 2019 – Jan 2024"
                   location="Palo Alto / Pasadena, CA"
                 >
                   Founded a startup that makes self-hosting easy. Built and designed the company: hardware, frontend,
@@ -166,22 +166,22 @@ export default function Resume() {
                 <Job
                   title="Lead DevOps Engineer"
                   company="RunKit (acquired by Stripe)"
-                  dateRange="July 2017 – July 2019"
+                  dateRange="Jul 2017 – Jul 2019"
                   location="San Francisco, CA"
                 >
                   Transformed RunKit&apos;s reliability engineering from prototype to enterprise-ready. Built a
-                  &ldquo;remote-code-execution-as-a-service&rdquo; platform secure enough for Stripe! Sat on TC39
+                  &ldquo;remote-code-execution-as-a-service&rdquo; platform secure enough for Stripe. Sat on the TC39
                   ECMAScript advisory board.
                 </Job>
 
                 <Job
                   title="Lead DevOps Engineer"
                   company="Imgur"
-                  dateRange="Feb 2016 – July 2017"
+                  dateRange="Feb 2016 – Jul 2017"
                   location="San Francisco, CA"
                 >
-                  Part of a very small team with extremely high traffic (top 10 Alexa ranked site, 3-person SRE team).
-                  Rearchitected several internet-facing apps to improve reliability and performance. Reduced 99p latency
+                  Part of a very small team with extremely high traffic (top-10 site, 3-person SRE team).
+                  Rearchitected several internet-facing apps to improve reliability and performance. Reduced p99 latency
                   by a factor of 10. Dramatic optimization, upgrade, and migration of extremely busy MySQL datastores
                   with no downtime.
                 </Job>
@@ -189,7 +189,7 @@ export default function Resume() {
                 <Job
                   title="Senior DevOps Engineer"
                   company="TigerText"
-                  dateRange="Sept 2014 – Feb 2016"
+                  dateRange="Sep 2014 – Feb 2016"
                   location="Santa Monica, CA"
                 >
                   On-call for messaging systems used by large healthcare providers and hospitals. The product&apos;s
@@ -263,16 +263,15 @@ export default function Resume() {
                       'Reliability',
                       'Platform Engineering',
                       'Team Leadership',
-                      'Full-stack (html to datacenter)',
+                      'Full-stack (HTML to datacenter)',
                     ].map(skill => (
                       <li key={skill}>{skill}</li>
                     ))}
                   </ul>
 
-                  <RightSectionLabel>Tools I love</RightSectionLabel>
+                  <RightSectionLabel>Some favorite niches</RightSectionLabel>
                   <p style={{ fontSize: '0.82rem', color: '#444', lineHeight: 1.8, margin: 0 }}>
-                    Linux, AWS, Kubernetes, Typescript, Node.js, Golang, Terraform, Chef, Redis, SQL, React, CDNs,
-                    Virtualization
+                    Kubernetes, TypeScript, Pulumi, Argo, ScyllaDB, Vitess, Varnish, Mastra
                   </p>
                 </div>
 
@@ -303,6 +302,13 @@ export default function Resume() {
       </main>
 
       <style jsx global>{`
+        html,
+        body {
+          color-scheme: light;
+          background-color: #fff;
+          color: #111;
+        }
+
         .resume-social-mobile {
           display: none;
         }

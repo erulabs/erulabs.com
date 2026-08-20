@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import { SiReaddotcv } from 'react-icons/si'
-import Animation from './Animation'
+import Animation from './AnimationSwitch'
 import avatar from '../public/avatar.jpg'
 
 export default function SiteHeader({ alwaysCollapsed = false, staticFlower = false }) {
@@ -76,10 +76,14 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
   // Mojo size: 32px -> 20px
   const mojoSize = 32 - scrollProgress * 12
 
-  // Animation scale
+  // Animation scale. The open bloom reaches roughly 220px either side of its own
+  // centre, and the framing at both ends of the scroll is set by that reach: a
+  // narrow viewport has to give some of it back, and the collapsed mark has only
+  // 44px to the canvas edge and 36px to the top of a 72px header.
   const isLargeScreen = windowWidth > 768
-  const collapsedScale = isLargeScreen ? 0.5 : 0.4
-  const animationScale = 1 - scrollProgress * (1 - collapsedScale)
+  const heroScale = Math.min(1, windowWidth / 470)
+  const collapsedScale = isLargeScreen ? 0.26 : 0.21
+  const animationScale = heroScale + scrollProgress * (collapsedScale - heroScale)
 
   // Photo/bloom center position
   const initialPhotoX = windowWidth / 2
@@ -144,7 +148,7 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
             cursor: 'pointer',
           }}
         >
-          <Image
+          {/* <Image
             src={avatar}
             title="Well, hello!"
             alt="A picture of the author, Seandon!"
@@ -154,7 +158,7 @@ export default function SiteHeader({ alwaysCollapsed = false, staticFlower = fal
               borderRadius: '100px',
               transition: isPositioned ? 'all 0.3s ease' : 'none',
             }}
-          />
+          /> */}
         </div>
 
         {/* Social icons */}
